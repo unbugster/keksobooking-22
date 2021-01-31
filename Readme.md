@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Andrew Bagaev](https://up.htmlacademy.ru/javascript/22/user/1380521).
-* Наставник: `Неизвестно`.
+* Наставник: [Andrew Karjakin](https://htmlacademy.ru/profile/id133011).
 
 ---
 
