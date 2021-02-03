@@ -9,6 +9,7 @@ const getRandomIntInclusive = (min, max) => {
     alert('Все плохо');
   }
 };
+getRandomIntInclusive(2,10);
 
 const getRandomInt = (min, max, decimalPlaces = 0) => {
   try {
@@ -20,3 +21,4 @@ const getRandomInt = (min, max, decimalPlaces = 0) => {
     alert('Все очень плохо!');
   }
 };
+getRandomInt(0, 5.12, 3);
