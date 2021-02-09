@@ -2,18 +2,19 @@
 const getRandomBetween = (min, max) => {
   if (isNaN(min) || isNaN(max)) {
     throw new Error('Invalid argument type entered.');
-  } else if (min < 0 || max < 0) {
-    throw new Error('A negative value has been entered.');
-  } else if (min === max) {
-    return min;
-  } else {
-    const x = min < max ? 1 : 0;
-
-    return (
-      Math.floor(Math.random() * (Math.floor(max) - Math.floor(min) + x)) +
-      Math.floor(min)
-    );
   }
+  if (min < 0 || max < 0) {
+    throw new Error('A negative value has been entered.');
+  }
+  if (min === max) {
+    return min;
+  }
+  const factor = min < max ? 1 : 0;
+
+  return (
+    Math.floor(Math.random() * (Math.floor(max) - Math.floor(min) + factor)) +
+    Math.floor(min)
+  );
 };
 
 try {
@@ -29,9 +30,9 @@ const getRandomFloatBetween = (min, max, decimalPlaces = 0) => {
   if (isNaN(decimalPlaces) || decimalPlaces < 0) {
     throw new Error('Invalid argument entered.');
   }
-  const m = Math.pow(10, decimalPlaces);
+  const multiplier = Math.pow(10, decimalPlaces);
 
-  return getRandomBetween(min * m, max * m) / m;
+  return getRandomBetween(min * multiplier, max * multiplier) / multiplier;
 };
 
 try {
