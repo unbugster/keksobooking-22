@@ -1,24 +1,43 @@
-const getRandomIntInclusive = (min, max) => {
-  try {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    if (isNaN(min) || isNaN(max) || min >= max || min < 0)
-      throw new Error('Введены некорректные данные');
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  } catch (err) {
-    alert('Все плохо');
-  }
-};
-getRandomIntInclusive(2,10);
+// Returns random integer from the passed range inclusive
+const getRandomBetween = (min, max) => {
+  if (isNaN(min) || isNaN(max)) {
+    throw new Error('Invalid argument type entered.');
+  } else if (min < 0 || max < 0) {
+    throw new Error('A negative value has been entered.');
+  } else if (min === max) {
+    return min;
+  } else {
+    const x = min < max ? 1 : 0;
 
-const getRandomInt = (min, max, decimalPlaces = 0) => {
-  try {
-    if (isNaN(min) || isNaN(max) || min >= max || min < 0)
-      throw new Error('Введены некорректные данные');
-    return Number(
-      (Math.random() * (max - min) + min).toFixed(decimalPlaces));
-  } catch (err) {
-    alert('Все очень плохо!');
+    return (
+      Math.floor(Math.random() * (Math.floor(max) - Math.floor(min) + x)) +
+      Math.floor(min)
+    );
   }
 };
-getRandomInt(0, 5.12, 3);
+
+try {
+  getRandomBetween(2, 10);
+} catch (err) {
+  alert('Something went wrong, contact your administrator');
+  /* eslint-disable no-console */
+  console.error(err.name + ':' + err.message);
+}
+
+// Returns a random floating point number from the passed range inclusive.
+const getRandomFloatBetween = (min, max, decimalPlaces = 0) => {
+  if (isNaN(decimalPlaces) || decimalPlaces < 0) {
+    throw new Error('Invalid argument entered.');
+  }
+  const m = Math.pow(10, decimalPlaces);
+
+  return getRandomBetween(min * m, max * m) / m;
+};
+
+try {
+  getRandomFloatBetween(0, 5.12, 3);
+} catch (err) {
+  alert('Something went wrong, contact your administrator');
+  /* eslint-disable no-console */
+  console.error(err.name + ':' + err.message);
+}
