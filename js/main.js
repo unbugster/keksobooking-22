@@ -116,7 +116,7 @@ const getRandomArrayList = (array) => {
 };
 
 // Функция, возвращающая 1 нужный объект
-const createAd = function() {
+const createAd = () => {
   const coordX = getRandomFloatBetween(MIN_LOCATION_X, MAX_LOCATION_X, DIGITS_COUNT);
   const coordY = getRandomFloatBetween(MIN_LOCATION_Y, MAX_LOCATION_Y, DIGITS_COUNT);
   const checkin = getRandomArrayElement(CHECKINS_CHECKOUTS);
@@ -147,7 +147,7 @@ const createAd = function() {
 // Функция, возвращающая любое количество наших нужных объектов.
 const createAds = (offersCount) => {
   let ads = []
-  for (let i = 0; i <= offersCount; i++) {
+  for (let i = 0; i < offersCount; i++) {
     ads.push(createAd());
   }
   return ads;
