@@ -1,2 +1,1 @@
-import './data.js';
-import './util.js';
+import './similar-ads.js';
