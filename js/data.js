@@ -60,7 +60,7 @@ const Rooms = {
   max:4,
 }
 
-// Функция, возвращающая 1 нужный объект
+// Функция, возвращающая 1 нужный объект - объявление
 const createAd = () => {
   const coordX = getRandomFloatBetween(Coordinates.minX, Coordinates.maxX, DIGITS_COUNT);
   const coordY = getRandomFloatBetween(Coordinates.minY, Coordinates.maxY, DIGITS_COUNT);
@@ -68,10 +68,10 @@ const createAd = () => {
 
   return {
     author: {
-      avatar: getAvatarImg(getRandomBetween(0, 8)),
+      avatar: getAvatarImg(getRandomBetween(1, 8)),
     },
     offer: {
-      titles: getRandomArrayElement(TITLES),
+      title: getRandomArrayElement(TITLES),
       address: `${coordX}, ${coordY}`,
       price: getRandomBetween(Prices.min, Prices.max),
       type: getRandomArrayElement(TYPES),
@@ -89,9 +89,9 @@ const createAd = () => {
     },
   };
 };
-// Функция, возвращающая любое количество наших нужных объектов.
+// Функция, возвращающая любое количество наших нужных объектов - объявлений.
 const createAds = (offersCount) => {
-  let ads = []
+  const ads = []
   for (let i = 0; i < offersCount; i++) {
     ads.push(createAd());
   }
@@ -101,4 +101,4 @@ const createAds = (offersCount) => {
 /* eslint-disable no-console */
 console.log(createAds(OFFERS_COUNT))
 
-export {createAds, createAd};
+export {createAds, createAd,OFFERS_COUNT};
