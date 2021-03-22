@@ -1,5 +1,5 @@
 root: true
-
+L: true
 parserOptions:
   ecmaVersion: 2018
   sourceType: "module"
@@ -10,3 +10,5 @@ env:
 
 extends:
   "htmlacademy/vanilla"
+
+  

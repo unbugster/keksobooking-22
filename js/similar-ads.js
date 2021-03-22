@@ -1,3 +1,5 @@
+import { createAds, OFFERS_COUNT } from './data.js';
+
 const cardTemplateFragment = document.querySelector('#card').content;
 const popup = cardTemplateFragment.querySelector('.popup');
 const mapCanvas = document.querySelector('#map-canvas');
@@ -86,14 +88,14 @@ const pastAvatar = (el, cl, content) => {
 
 
 const getCardElement = (ad) => {
-  const {offer, author} = ad;
+  const { offer, author } = ad;
   const cardElement = popup.cloneNode(true);
   pasteTextContent(cardElement, SELECTORS.title, offer.title);
-  pasteTextContent(cardElement,SELECTORS.address, offer.address);
-  pasteHtmlContent(cardElement,SELECTORS.price, getPriceText(offer.price));
-  pasteTextContent(cardElement,SELECTORS.type, HOUSE_TYPES[offer.type]);
+  pasteTextContent(cardElement, SELECTORS.address, offer.address);
+  pasteHtmlContent(cardElement, SELECTORS.price, getPriceText(offer.price));
+  pasteTextContent(cardElement, SELECTORS.type, HOUSE_TYPES[offer.type]);
   pasteTextContent(cardElement, SELECTORS.capacity, getRoomsAndGuestsText(offer.rooms, offer.guests));
-  pasteTextContent(cardElement, SELECTORS.time, getChecksText(offer.checkin,offer.checkout));
+  pasteTextContent(cardElement, SELECTORS.time, getChecksText(offer.checkin, offer.checkout));
   displayFeatures(cardElement, SELECTORS.feature, offer.features);
   pasteTextContent(cardElement, SELECTORS.description, offer.description);
   pastPhotos(cardElement, offer.photos)
@@ -101,10 +103,9 @@ const getCardElement = (ad) => {
   return cardElement;
 }
 
-const renderAds = (n, ads) => {
-  for (let i = 0; i < n; i++) {
-    mapCanvas.appendChild(getCardElement(ads[i]));
-  }
+const renderAd = (i) => {
+  mapCanvas.appendChild(getCardElement(ads[i]))
 }
 
-export {renderAds};
+const ads = createAds(OFFERS_COUNT);
+export { ads, renderAd, getCardElement };

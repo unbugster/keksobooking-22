@@ -2,6 +2,8 @@ const fieldType = document.querySelector('#type');
 const fieldPrice = document.querySelector('#price');
 const fieldTimein = document.querySelector('#timein');
 const fieldTimeout = document.querySelector('#timeout');
+const form = document.querySelector('.ad-form');
+const mapFilters = document.querySelector('.map__filters');
 
 const HOUSE_TYPE_MIN_PRICE = {
   flat: 1000,
@@ -32,4 +34,4 @@ const initFormListeners = () => {
   fieldTimeout.addEventListener('change', fieldTimeOutChangeHandler);
 }
 
-export {initFormListeners};
+export { initFormListeners, form, mapFilters };
