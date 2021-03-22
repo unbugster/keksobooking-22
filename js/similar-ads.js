@@ -1,10 +1,6 @@
-import {createAds, OFFERS_COUNT} from './data.js';
-export const ads = createAds(OFFERS_COUNT);
-
 const cardTemplateFragment = document.querySelector('#card').content;
 const popup = cardTemplateFragment.querySelector('.popup');
 const mapCanvas = document.querySelector('#map-canvas');
-const cardElement = popup.cloneNode(true);
 
 const HOUSE_TYPES = {
   flat: 'Квартира',
@@ -27,7 +23,6 @@ const SELECTORS = {
   feature: 'popup__feature',
 };
 
-const cardFragment = document.createDocumentFragment();
 const getRoomsAndGuestsText = (rooms, guests) => `${rooms} комнаты для ${guests} гостей`;
 const getChecksText = (checkin, checkpout) => `Заезд после ${checkin}, выезд до ${checkpout}`;
 const getPriceText = (price) => `${price} <span>₽/ночь</span>`
@@ -89,18 +84,27 @@ const pastAvatar = (el, cl, content) => {
   child.src = content;
 };
 
-const {offer, author} = ads[0];
 
-pasteTextContent(cardElement, SELECTORS.title, offer.title);
-pasteTextContent(cardElement,SELECTORS.address, offer.address);
-pasteHtmlContent(cardElement,SELECTORS.price, getPriceText(offer.price));
-pasteTextContent(cardElement,SELECTORS.type, HOUSE_TYPES[offer.type]);
-pasteTextContent(cardElement, SELECTORS.capacity, getRoomsAndGuestsText(offer.rooms, offer.guests));
-pasteTextContent(cardElement, SELECTORS.time, getChecksText(offer.checkin,offer.checkout));
-displayFeatures(cardElement, SELECTORS.feature, offer.features);
-pasteTextContent(cardElement, SELECTORS.description, offer.description);
-pastPhotos(cardElement, offer.photos)
-pastAvatar(cardElement, SELECTORS.avatar, author.avatar);
+const getCardElement = (ad) => {
+  const {offer, author} = ad;
+  const cardElement = popup.cloneNode(true);
+  pasteTextContent(cardElement, SELECTORS.title, offer.title);
+  pasteTextContent(cardElement,SELECTORS.address, offer.address);
+  pasteHtmlContent(cardElement,SELECTORS.price, getPriceText(offer.price));
+  pasteTextContent(cardElement,SELECTORS.type, HOUSE_TYPES[offer.type]);
+  pasteTextContent(cardElement, SELECTORS.capacity, getRoomsAndGuestsText(offer.rooms, offer.guests));
+  pasteTextContent(cardElement, SELECTORS.time, getChecksText(offer.checkin,offer.checkout));
+  displayFeatures(cardElement, SELECTORS.feature, offer.features);
+  pasteTextContent(cardElement, SELECTORS.description, offer.description);
+  pastPhotos(cardElement, offer.photos)
+  pastAvatar(cardElement, SELECTORS.avatar, author.avatar);
+  return cardElement;
+}
 
-cardFragment.appendChild(cardElement);
-mapCanvas.appendChild(cardFragment);
+const renderAds = (n, ads) => {
+  for (let i = 0; i < n; i++) {
+    mapCanvas.appendChild(getCardElement(ads[i]));
+  }
+}
+
+export {renderAds};

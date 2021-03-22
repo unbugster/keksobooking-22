@@ -98,7 +98,5 @@ const createAds = (offersCount) => {
 
   return ads;
 };
-/* eslint-disable no-console */
-console.log(createAds(OFFERS_COUNT))
 
-export {createAds, createAd,OFFERS_COUNT};
+export {createAds, createAd, OFFERS_COUNT};
