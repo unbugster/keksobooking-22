@@ -1,5 +1,5 @@
 import { form, mapFilters } from './form.js';
-import { ads, getCardElement, } from './similar-ads.js';
+import { ads, getCardElement } from './similar-ads.js';
 
 const interactivTags = ['select', 'input', 'button', 'a']
 
@@ -32,6 +32,7 @@ const makesFormActive = (el, childTags, inactiveClass) => {
 
 const map = L.map('map-canvas')
   .on('load', () => {
+    /* eslint-disable no-console*/
     console.log('Карта инициализирована')
     makesFormActive(form, interactivTags, 'ad-form--disabled');
     makesFormActive(mapFilters, interactivTags, 'ad-form--disabled');
@@ -74,8 +75,6 @@ mainMarker.on('moveend', (evt) => {
   const y = evt.target.getLatLng().lng;
   fieldAddress.value = `${x.toFixed(degree)}, ${y.toFixed(degree)}`;
 });
-
-const points = ads.map((ad) => ({ title: ad.offer.title, lat: ad.location.x, lng: ad.location.y, }));
 
 ads.forEach((opt) => {
   const icon = L.icon({
