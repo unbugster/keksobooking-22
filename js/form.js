@@ -1,13 +1,16 @@
-const fieldType = document.querySelector('#type');
-const fieldPrice = document.querySelector('#price');
-const fieldTimein = document.querySelector('#timein');
-const fieldTimeout = document.querySelector('#timeout');
-const form = document.querySelector('.ad-form');
-const mapFilters = document.querySelector('.map__filters');
-const fieldAddress = form.querySelector('#address');
+const FIELD_TYPE = document.querySelector('#type');
+const FIELD_PRICE = document.querySelector('#price');
+const FIELD_TIME_IN = document.querySelector('#timein');
+const FIELD_TIME_OUT = document.querySelector('#timeout');
+const FORM = document.querySelector('.ad-form');
+const MAP_FILTERS = document.querySelector('.map__filters');
+const FIELD_ADDRESS = FORM.querySelector('#address');
+const USER_TITLE_INPUT = document.querySelector('#title');
+const FIELD_CAPACITY = document.querySelector('#capacity');
+const FIELD_ROOMS_NUMBER = document.querySelector('#room_number');
+const OPTIONS = FIELD_CAPACITY.querySelectorAll('option');
 const DEGREE = 5;
 const INACTIVE_CLASS = 'ad-form--disabled';
-
 
 const INTERACTIVE_TAGS = [
   'select',
@@ -26,26 +29,20 @@ const HOUSE_TYPE_MIN_PRICE = {
 const fieldHouseTypeChangeHandler = (evt) => {
   const value = evt.target.value;
 
-  fieldPrice.value = HOUSE_TYPE_MIN_PRICE[value];
-  fieldPrice.placeholder = HOUSE_TYPE_MIN_PRICE[value];
+  FIELD_PRICE.value = HOUSE_TYPE_MIN_PRICE[value];
+  FIELD_PRICE.placeholder = HOUSE_TYPE_MIN_PRICE[value];
 }
 
 const fieldTimeInChangeHandler = (evt) => {
   const value = evt.target.value;
 
-  fieldTimeout.value = value;
+  FIELD_TIME_OUT.value = value;
 }
 
 const fieldTimeOutChangeHandler = (evt) => {
   const value = evt.target.value;
 
-  fieldTimein.value = value;
-}
-
-const initFormListeners = () => {
-  fieldType.addEventListener('change', fieldHouseTypeChangeHandler);
-  fieldTimein.addEventListener('change', fieldTimeInChangeHandler);
-  fieldTimeout.addEventListener('change', fieldTimeOutChangeHandler);
+  FIELD_TIME_IN.value = value;
 }
 
 /**
@@ -53,11 +50,11 @@ const initFormListeners = () => {
  * @param {{ lat, lng }} param0
  */
 const updateAddress = ({ lat, lng }) => {
-  fieldAddress.value = `${lat.toFixed(DEGREE)}, ${lng.toFixed(DEGREE)}`;
+  FIELD_ADDRESS.value = `${lat.toFixed(DEGREE)}, ${lng.toFixed(DEGREE)}`;
 };
 
 const makesFormsInactive = () => {
-  [form, mapFilters].forEach((el) => {
+  [FORM, MAP_FILTERS].forEach((el) => {
     el.classList.add(INACTIVE_CLASS);
     INTERACTIVE_TAGS.forEach((tag) => {
       const children = el.querySelectorAll(tag);
@@ -70,7 +67,7 @@ const makesFormsInactive = () => {
 }
 
 const makesFormsActive = () => {
-  [form, mapFilters].forEach((el) => {
+  [FORM, MAP_FILTERS].forEach((el) => {
     el.classList.remove(INACTIVE_CLASS);
     INTERACTIVE_TAGS.forEach((tag) => {
       const children = el.querySelectorAll(tag);
@@ -82,4 +79,75 @@ const makesFormsActive = () => {
   })
 };
 
-export { initFormListeners, makesFormsActive as makesFormActive, makesFormsInactive as makesFormInactive, form, mapFilters, updateAddress };
+USER_TITLE_INPUT.addEventListener('input', () => {
+  const MIN_LENGTH = 30;
+  const MAX_LENGTH = 100;
+  const valueLength = USER_TITLE_INPUT.value.length;
+
+  if (valueLength < MIN_LENGTH) {
+    USER_TITLE_INPUT.setCustomValidity('Ещё ' + (MIN_LENGTH - valueLength) + ' симв.');
+  } else if (valueLength > MAX_LENGTH) {
+    USER_TITLE_INPUT.setCustomValidity('Удалите лишние ' + (valueLength - MAX_LENGTH) + ' симв.');
+  } else {
+    USER_TITLE_INPUT.setCustomValidity('');
+  }
+
+  USER_TITLE_INPUT.reportValidity();
+});
+
+FIELD_PRICE.addEventListener('input', () => {
+  const MAX_PRICE = 1000000;
+  const value = FIELD_PRICE.value;
+
+  if (value > MAX_PRICE) {
+    FIELD_PRICE.setCustomValidity('Максимальная цена 1000000');
+  } else {
+    FIELD_PRICE.setCustomValidity('');
+  }
+
+  FIELD_PRICE.reportValidity();
+});
+
+const getOptionsToShow = (rooms) => {
+  if (rooms === '1') {
+    return ['1'];
+  }
+  if (rooms === '2') {
+    return ['1', '2'];
+  }
+  if (rooms === '3') {
+    return ['1', '2', '3'];
+  }
+  if (rooms === '100') {
+    return ['0']
+  }
+}
+
+const fieldRoomsChangeCountHandler = (evt) => {
+  const value = evt.target.value;
+  const optionsToShow = getOptionsToShow(value);
+
+  OPTIONS.forEach((el) => {
+    if (optionsToShow.includes(el.value)) {
+      el.disabled = false;
+    } else {
+      el.disabled = true;
+    }
+  })
+
+  const selectedElement = [...OPTIONS].find((opt) => opt.selected === true);
+  // если на момент клика он не должен быть выбран, нужно будет переставить селект на первый элемент из доступных.
+  if (selectedElement.disabled) {
+    const firstUndisabledElement = [...OPTIONS].find((opt) => opt.disabled === false);
+    firstUndisabledElement.selected = true;
+  }
+}
+
+const initFormListeners = () => {
+  FIELD_TYPE.addEventListener('change', fieldHouseTypeChangeHandler);
+  FIELD_TIME_IN.addEventListener('change', fieldTimeInChangeHandler);
+  FIELD_TIME_OUT.addEventListener('change', fieldTimeOutChangeHandler);
+  FIELD_ROOMS_NUMBER.addEventListener('change', fieldRoomsChangeCountHandler);
+}
+
+export { initFormListeners, makesFormsActive, makesFormsInactive, updateAddress };
