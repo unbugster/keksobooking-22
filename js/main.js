@@ -8,8 +8,16 @@ const ads = createAds(OFFERS_COUNT);
 const points = ads.map(({ location }) => ({ lat: location.x, lng: location.y }))
 const renderAd = (index) => getCardElement(ads[index]);
 
+/**
+ * Обработчик события загрузки карты(сработает только после успешной инициализации карты) =>
+ *  в нем мы выполняем логику исходя из ТЗ (проставляем пины и рендерим их описание + активация формы.)
+ */
+
 const handleMapLoad = () => {
   addPins(points, renderAd);
+  initFormListeners();
 };
 //initFormListeners();
+
+
 initMap(handleMapLoad, updateAddress);

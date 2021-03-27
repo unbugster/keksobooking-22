@@ -118,7 +118,11 @@ const handleMapLoadSuccess = () => {
 }
 
 
-
+/**
+ * Инициализация карты
+ * @param {cb} onLoadSuccess Обработчик загрузки карты
+ * @param {cb} onMainPinMove Обработчик движения главного пина
+ */
 const initMap = (onLoadSuccess, onMainPinMove) => {
   map.on('load', onLoadSuccess)
     .setView({
@@ -126,13 +130,19 @@ const initMap = (onLoadSuccess, onMainPinMove) => {
       lng: 139.69171,//toDo оконстантить!
     }, 10);
 
+  /**
+ * Обертка обработчика движения главного пина - достает координаты из объекта evt
+ * @param {event} evt
+ */
+  const handleMainPinMove = (evt) => {
+    onMainPinMove(evt.target.getLatLng());
+  }
 
-  const handleMainPinMove = (evt) => onMainPinMove(evt.target.getLatLng());
+  //Проброс координат главного пина до начала движения
   onMainPinMove({
     lat: 35.6895, //toDo оконстантить!
     lng: 139.69171,//toDo оконстантить!
   });
-
 
   mainMarker.on('moveend', handleMainPinMove);
 }
@@ -143,7 +153,13 @@ const icon = L.icon({
   iconAnchor: [20, 20],
 })
 
-const addPins = (points, onPinClick) => {
+/**
+ * Добавляет пины на карту
+ * @param {[{lat, lng}, ...]} points массив объектов координат пинов.
+ * @param {*} renderAd по клику вызывает обработчик.
+ */
+
+const addPins = (points, renderAd) => {
   points.forEach(({ lat, lng }, index) => {
 
     const marker = L.marker(
@@ -156,7 +172,7 @@ const addPins = (points, onPinClick) => {
       });
 
     marker.addTo(map).bindPopup(
-      onPinClick(index),
+      renderAd(index),
       {
         keepInView: true,
       },
