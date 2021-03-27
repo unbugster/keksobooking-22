@@ -1,4 +1,4 @@
-import { createAds, OFFERS_COUNT } from './data.js';
+//import { createAds, OFFERS_COUNT } from './data.js';
 
 const cardTemplateFragment = document.querySelector('#card').content;
 const popup = cardTemplateFragment.querySelector('.popup');
@@ -102,10 +102,11 @@ const getCardElement = (ad) => {
   pastAvatar(cardElement, SELECTORS.avatar, author.avatar);
   return cardElement;
 }
-
+/*
 const renderAd = (i) => {
   mapCanvas.appendChild(getCardElement(ads[i]))
 }
+*/
+//const ads = createAds(OFFERS_COUNT);
 
-const ads = createAds(OFFERS_COUNT);
-export { ads, renderAd, getCardElement };
+export { getCardElement };
