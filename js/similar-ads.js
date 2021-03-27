@@ -1,8 +1,7 @@
 //import { createAds, OFFERS_COUNT } from './data.js';
 
-const cardTemplateFragment = document.querySelector('#card').content;
-const popup = cardTemplateFragment.querySelector('.popup');
-const mapCanvas = document.querySelector('#map-canvas');
+const CARD_TEMPLATE_FRAGMENT = document.querySelector('#card').content;
+const POPUP = CARD_TEMPLATE_FRAGMENT.querySelector('.popup');
 
 const HOUSE_TYPES = {
   flat: 'Квартира',
@@ -89,7 +88,7 @@ const pastAvatar = (el, cl, content) => {
 
 const getCardElement = (ad) => {
   const { offer, author } = ad;
-  const cardElement = popup.cloneNode(true);
+  const cardElement = POPUP.cloneNode(true);
   pasteTextContent(cardElement, SELECTORS.title, offer.title);
   pasteTextContent(cardElement, SELECTORS.address, offer.address);
   pasteHtmlContent(cardElement, SELECTORS.price, getPriceText(offer.price));
@@ -102,11 +101,6 @@ const getCardElement = (ad) => {
   pastAvatar(cardElement, SELECTORS.avatar, author.avatar);
   return cardElement;
 }
-/*
-const renderAd = (i) => {
-  mapCanvas.appendChild(getCardElement(ads[i]))
-}
-*/
-//const ads = createAds(OFFERS_COUNT);
+
 
 export { getCardElement };
