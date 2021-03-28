@@ -144,7 +144,7 @@ const fieldRoomsChangeCountHandler = (evt) => {
 
 const SERVER_SEND_URL = 'https://22.javascript.pages.academy/keksobooking';
 
-const createSubmitHandler = (onSubmit) => {
+const createSubmitHandler = (onSuccess) => {
   return (evt) => {
     const formData = new FormData(evt.target);
 
@@ -156,17 +156,17 @@ const createSubmitHandler = (onSubmit) => {
       },
     ).then(() => {
       resetForms();
-      onSubmit()
+      onSuccess();
     })
   }
 }
 
-const initFormListeners = (onSubmit) => {
+const initFormListeners = (onSubmitSuccess) => {
   FIELD_TYPE.addEventListener('change', fieldHouseTypeChangeHandler);
   FIELD_TIME_IN.addEventListener('change', fieldTimeInChangeHandler);
   FIELD_TIME_OUT.addEventListener('change', fieldTimeOutChangeHandler);
   FIELD_ROOMS_NUMBER.addEventListener('change', fieldRoomsChangeCountHandler);
-  FORM.addEventListener('submit', createSubmitHandler(onSubmit));
+  FORM.addEventListener('submit', createSubmitHandler(onSubmitSuccess));
 
 }
 

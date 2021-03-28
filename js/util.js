@@ -49,4 +49,9 @@ const getRandomArrayList = (array) => {
 
   return result;
 };
-export {getRandomArrayList, getRandomArrayElement, getRandomFloatBetween, getRandomBetween, getAvatarImg};
+
+const isEscEvent = (evt) => {
+  return evt.key === 'Escape' || evt.key === 'Esc';
+};
+
+export { getRandomArrayList, getRandomArrayElement, getRandomFloatBetween, getRandomBetween, getAvatarImg, isEscEvent };
