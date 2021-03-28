@@ -1,4 +1,4 @@
-import {getRandomArrayList, getRandomArrayElement, getRandomFloatBetween, getRandomBetween, getAvatarImg} from './util.js';
+import { getRandomArrayList, getRandomArrayElement, getRandomFloatBetween, getRandomBetween, getAvatarImg } from './util.js';
 
 const OFFERS_COUNT = 10;
 const DIGITS_COUNT = 2;
@@ -40,14 +40,14 @@ const DESCRIPTIONS = [
   'Расстояние до международного аэропорта Токио-Ханэда составляет 30 км.',
 ];
 const Guests = {
-  min:1,
-  max:6,
+  min: 1,
+  max: 6,
 }
 const Coordinates = {
   minX: 35.65,
   maxX: 35.7,
-  minY:139.7,
-  maxY:139.8,
+  minY: 139.7,
+  maxY: 139.8,
 }
 
 const Prices = {
@@ -56,8 +56,8 @@ const Prices = {
 }
 
 const Rooms = {
-  min:1,
-  max:4,
+  min: 1,
+  max: 4,
 }
 
 // Функция, возвращающая 1 нужный объект - объявление
@@ -77,7 +77,7 @@ const createAd = () => {
       type: getRandomArrayElement(TYPES),
       rooms: getRandomBetween(Rooms.min, Rooms.max),
       guests: getRandomBetween(Guests.min, Guests.max),
-      checkin:  check,
+      checkin: check,
       checkout: check,
       features: getRandomArrayList(FEATURES),
       description: getRandomArrayElement(DESCRIPTIONS),
@@ -99,4 +99,6 @@ const createAds = (offersCount) => {
   return ads;
 };
 
-export {createAds, createAd, OFFERS_COUNT};
+export { createAds, createAd, OFFERS_COUNT };
+
+

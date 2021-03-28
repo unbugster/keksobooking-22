@@ -143,11 +143,47 @@ const fieldRoomsChangeCountHandler = (evt) => {
   }
 }
 
+const SERVER_SEND_URL = 'https://22.javascript.pages.academy/keksobooking';
+
+const onSubmit = (evt) => {
+  const formData = new FormData(evt.target);
+
+  evt.preventDefault();
+  fetch(SERVER_SEND_URL,
+    {
+      method: 'POST',
+      body: formData,
+    })
+}
+
 const initFormListeners = () => {
   FIELD_TYPE.addEventListener('change', fieldHouseTypeChangeHandler);
   FIELD_TIME_IN.addEventListener('change', fieldTimeInChangeHandler);
   FIELD_TIME_OUT.addEventListener('change', fieldTimeOutChangeHandler);
   FIELD_ROOMS_NUMBER.addEventListener('change', fieldRoomsChangeCountHandler);
+  FORM.addEventListener('submit', onSubmit);
 }
 
+
+
+/*
+Добавьте обработчик отправки формы, если ещё этого не сделали,
+который бы отменял действие формы по умолчанию и отправлял данные формы посредством fetch на сервер.
+*/
+
+
+
+/*
+2.5. При успешной отправке формы или её очистке (нажатие на кнопку .ad-form__reset) страница, не перезагружаясь, переходит в состояние, когда:
+все заполненные поля возвращаются в изначальное состояние;
+фильтрация (состояние фильтров и отфильтрованные метки) сбрасывается;
+метка адреса возвращается в исходное положение;
+значение поля адреса корректируется соответственно исходному положению метки. */
+
+/* const resetForm = () => {
+  FIELD_PRICE.value = '';
+  USER_TITLE_INPUT.value = '';
+
+}
+ */
 export { initFormListeners, makesFormsActive, makesFormsInactive, updateAddress };
