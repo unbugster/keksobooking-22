@@ -36,6 +36,14 @@ const mainMarker = L.marker(
   },
 );
 
+const resetMainMarkerPosition = () => {
+  const { lat, lng } = DEFAULT_COORD;
+  const newLatLng = new L.LatLng(lat, lng)
+  mainMarker.setLatLng(newLatLng);
+  return DEFAULT_COORD;
+
+}
+
 mainMarker.addTo(map);
 
 /**
@@ -94,4 +102,4 @@ const addPins = (points, renderAd) => {
   });
 }
 
-export { addPins, initMap }
+export { addPins, initMap, resetMainMarkerPosition }

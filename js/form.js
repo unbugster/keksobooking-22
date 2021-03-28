@@ -136,7 +136,6 @@ const fieldRoomsChangeCountHandler = (evt) => {
   })
 
   const selectedElement = [...OPTIONS].find((opt) => opt.selected === true);
-  // если на момент клика он не должен быть выбран, нужно будет переставить селект на первый элемент из доступных.
   if (selectedElement.disabled) {
     const firstUndisabledElement = [...OPTIONS].find((opt) => opt.disabled === false);
     firstUndisabledElement.selected = true;
@@ -145,45 +144,75 @@ const fieldRoomsChangeCountHandler = (evt) => {
 
 const SERVER_SEND_URL = 'https://22.javascript.pages.academy/keksobooking';
 
-const onSubmit = (evt) => {
-  const formData = new FormData(evt.target);
+const createSubmitHandler = (onSubmit) => {
+  return (evt) => {
+    const formData = new FormData(evt.target);
 
-  evt.preventDefault();
-  fetch(SERVER_SEND_URL,
-    {
-      method: 'POST',
-      body: formData,
+    evt.preventDefault();
+    fetch(SERVER_SEND_URL,
+      {
+        method: 'POST',
+        body: formData,
+      },
+    ).then(() => {
+      resetForms();
+      onSubmit()
     })
+  }
 }
 
-const initFormListeners = () => {
+const initFormListeners = (onSubmit) => {
   FIELD_TYPE.addEventListener('change', fieldHouseTypeChangeHandler);
   FIELD_TIME_IN.addEventListener('change', fieldTimeInChangeHandler);
   FIELD_TIME_OUT.addEventListener('change', fieldTimeOutChangeHandler);
   FIELD_ROOMS_NUMBER.addEventListener('change', fieldRoomsChangeCountHandler);
-  FORM.addEventListener('submit', onSubmit);
-}
-
-
-
-/*
-Добавьте обработчик отправки формы, если ещё этого не сделали,
-который бы отменял действие формы по умолчанию и отправлял данные формы посредством fetch на сервер.
-*/
-
-
-
-/*
-2.5. При успешной отправке формы или её очистке (нажатие на кнопку .ad-form__reset) страница, не перезагружаясь, переходит в состояние, когда:
-все заполненные поля возвращаются в изначальное состояние;
-фильтрация (состояние фильтров и отфильтрованные метки) сбрасывается;
-метка адреса возвращается в исходное положение;
-значение поля адреса корректируется соответственно исходному положению метки. */
-
-/* const resetForm = () => {
-  FIELD_PRICE.value = '';
-  USER_TITLE_INPUT.value = '';
+  FORM.addEventListener('submit', createSubmitHandler(onSubmit));
 
 }
- */
+
+const setElementValue = (el, value) => {
+  if (typeof el === 'string') {
+    el = document.querySelector(el);
+  }
+  const field = el.type === 'checkbox' ? 'checked' : 'value';
+  el[field] = value;
+}
+
+const mapFormSelectors = [
+  '#housing-type',
+  '#housing-price',
+  '#housing-rooms',
+  '#housing-guests',
+];
+
+const mapFormCheckboxes = [
+  '#filter-wifi',
+  '#filter-dishwasher',
+  '#filter-parking',
+  '#filter-washer',
+  '#filter-elevator',
+  '#filter-conditioner',
+];
+
+const formSelectors = [
+  '#feature-wifi',
+  '#feature-dishwasher',
+  '#feature-parking',
+  '#feature-washer',
+  '#feature-elevator',
+  '#feature-conditioner',
+];
+
+const resetForms = () => {
+  mapFormSelectors.forEach((selector) => setElementValue(selector, 'any'));
+  mapFormCheckboxes.forEach((selector) => setElementValue(selector, false));
+
+  setElementValue(FIELD_TYPE, 'flat');
+  setElementValue(FIELD_PRICE, '');
+  setElementValue(FIELD_TIME_IN, '12:00');
+  setElementValue(FIELD_TIME_OUT, '12:00');
+
+  formSelectors.forEach(selector => setElementValue(selector, false))
+}
+
 export { initFormListeners, makesFormsActive, makesFormsInactive, updateAddress };

@@ -1,7 +1,7 @@
 
 import { createAds, OFFERS_COUNT } from './data.js';
 import { initFormListeners, makesFormsActive, makesFormsInactive, updateAddress } from './form.js';
-import { addPins, initMap } from './map.js';
+import { addPins, initMap, resetMainMarkerPosition } from './map.js';
 import { getCardElement } from './similar-ads.js';
 
 const ads = createAds(OFFERS_COUNT);
@@ -14,9 +14,14 @@ const renderAd = (index) => getCardElement(ads[index]);
  */
 makesFormsInactive();
 
+const onFormSubmit = () => {
+  const coords = resetMainMarkerPosition();
+  updateAddress(coords);
+}
+
 const handleMapLoad = () => {
   addPins(points, renderAd);
-  initFormListeners();
+  initFormListeners(onFormSubmit);
   makesFormsActive();
 };
 
