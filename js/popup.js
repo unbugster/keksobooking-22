@@ -7,12 +7,16 @@ const POPUP_ERROR_TEMPLATE = document.querySelector('#error').content;
 const ERROR_MESSAGE_ELEMENT = POPUP_ERROR_TEMPLATE.querySelector('.error');
 const popupSuccessClone = SUCCESS_MESSAGE_ELEMENT.cloneNode(true);
 const popupErrorClone = ERROR_MESSAGE_ELEMENT.cloneNode(true);
+const POPUP_DATA_ERROR_TEMPLATE = document.querySelector('#error-data').content;
+const POPUP_DATA_ERROR = POPUP_DATA_ERROR_TEMPLATE.querySelector('.error')
+const POPUP_DATA_ERROR_CLONE = POPUP_DATA_ERROR.cloneNode(true);
 
 const onPopupsEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     closeSuccessMessagePopup();
     closeErrorMessagePopup();
+    closeDataErrorPopup();
   }
 };
 
@@ -32,6 +36,21 @@ const closeErrorMessagePopup = () => {
   popupErrorClone.classList.add('visually-hidden');
 };
 
+const openDataErrorPopup = () => {
+  POPUP_DATA_ERROR_CLONE.classList.remove('visually-hidden')
+};
+
+const closeDataErrorPopup = () => {
+  POPUP_DATA_ERROR_CLONE.classList.add('visually-hidden');
+};
+
+const initDataErrorPopup = () => {
+  POPUP_DATA_ERROR_CLONE.classList.add('visually-hidden')
+  MAIN_BLOCK.appendChild(POPUP_DATA_ERROR_CLONE);
+  document.addEventListener('keydown', onPopupsEscKeydown)
+  POPUP_DATA_ERROR_CLONE.addEventListener('click', closeDataErrorPopup)
+}
+
 const initSuccessPopup = () => {
   popupSuccessClone.classList.add('visually-hidden')
   MAIN_BLOCK.appendChild(popupSuccessClone);
@@ -46,4 +65,4 @@ const initErrorPopup = () => {
   popupErrorClone.addEventListener('click', closeErrorMessagePopup)
 }
 
-export { initSuccessPopup, openSuccessMessagePopup, openErrorMessagePopup, initErrorPopup }
+export { initSuccessPopup, openSuccessMessagePopup, openErrorMessagePopup, initErrorPopup, openDataErrorPopup, initDataErrorPopup }
