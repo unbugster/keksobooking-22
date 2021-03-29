@@ -1,3 +1,5 @@
+import { createAd } from './data.js';
+
 const FIELD_TYPE = document.querySelector('#type');
 const FIELD_PRICE = document.querySelector('#price');
 const FIELD_TIME_IN = document.querySelector('#timein');
@@ -145,27 +147,21 @@ const fieldRoomsChangeCountHandler = (evt) => {
   }
 }
 
-const SERVER_SEND_URL = 'https://22.javascript.pages.academy/keksobooking';
-
 const createSubmitHandler = (onSuccess, onError) => {
   return (evt) => {
-    const formData = new FormData(evt.target);
+    const data = new FormData(evt.target);
     evt.preventDefault();
-    fetch(SERVER_SEND_URL,
-      {
-        method: 'POST',
-        body: formData,
-      },
-    ).then((response) => {
-      if (!response.ok) {
-        onError()
-      } else {
-        resetForms();
-        onSuccess();
-      }
-    })
+    createAd(data)
+      .then((ok) => {
+        if (!ok) {
+          onError()
+        } else {
+          resetForms();
+          onSuccess();
+        }
+      })
   }
-}
+};
 
 const createResetHandler = (onReset) => {
   return () => {
