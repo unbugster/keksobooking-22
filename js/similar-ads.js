@@ -102,5 +102,4 @@ const getCardElement = (ad) => {
   return cardElement;
 }
 
-
 export { getCardElement };

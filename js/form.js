@@ -12,6 +12,8 @@ const OPTIONS = FIELD_CAPACITY.querySelectorAll('option');
 const DEGREE = 5;
 const INACTIVE_CLASS = 'ad-form--disabled';
 
+const resetButton = document.querySelector('.ad-form__reset');
+
 const INTERACTIVE_TAGS = [
   'select',
   'input',
@@ -50,7 +52,8 @@ const fieldTimeOutChangeHandler = (evt) => {
  * @param {{ lat, lng }} param0
  */
 const updateAddress = ({ lat, lng }) => {
-  FIELD_ADDRESS.value = `${lat.toFixed(DEGREE)}, ${lng.toFixed(DEGREE)}`;
+  const newValue = `${lat.toFixed(DEGREE)}, ${lng.toFixed(DEGREE)}`
+  FIELD_ADDRESS.value = newValue;
 };
 
 const makesFormsInactive = () => {
@@ -144,30 +147,40 @@ const fieldRoomsChangeCountHandler = (evt) => {
 
 const SERVER_SEND_URL = 'https://22.javascript.pages.academy/keksobooking';
 
-const createSubmitHandler = (onSuccess) => {
+const createSubmitHandler = (onSuccess, onError) => {
   return (evt) => {
     const formData = new FormData(evt.target);
-
     evt.preventDefault();
     fetch(SERVER_SEND_URL,
       {
         method: 'POST',
         body: formData,
       },
-    ).then(() => {
-      resetForms();
-      onSuccess();
+    ).then((response) => {
+      if (!response.ok) {
+        onError()
+      } else {
+        resetForms();
+        onSuccess();
+      }
     })
   }
 }
 
-const initFormListeners = (onSubmitSuccess) => {
+const createResetHandler = (onReset) => {
+  return () => {
+    onReset();
+    resetForms();
+  }
+}
+
+const initFormListeners = (onSubmitSuccess, onSubmitError, resetMarker) => {
   FIELD_TYPE.addEventListener('change', fieldHouseTypeChangeHandler);
   FIELD_TIME_IN.addEventListener('change', fieldTimeInChangeHandler);
   FIELD_TIME_OUT.addEventListener('change', fieldTimeOutChangeHandler);
   FIELD_ROOMS_NUMBER.addEventListener('change', fieldRoomsChangeCountHandler);
-  FORM.addEventListener('submit', createSubmitHandler(onSubmitSuccess));
-
+  FORM.addEventListener('submit', createSubmitHandler(onSubmitSuccess, onSubmitError));
+  resetButton.addEventListener('click', createResetHandler(resetMarker));
 }
 
 const setElementValue = (el, value) => {

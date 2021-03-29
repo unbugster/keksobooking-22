@@ -40,8 +40,8 @@ const resetMainMarkerPosition = () => {
   const { lat, lng } = DEFAULT_COORD;
   const newLatLng = new L.LatLng(lat, lng)
   mainMarker.setLatLng(newLatLng);
-  return DEFAULT_COORD;
 
+  return DEFAULT_COORD;
 }
 
 mainMarker.addTo(map);
