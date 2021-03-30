@@ -75,8 +75,8 @@ const makesFormsInactive = () => {
   })
 }
 
-const makesFormsActive = () => {
-  [FORM, MAP_FILTERS].forEach((el) => {
+const makesFormsActive = (forms) => {
+  forms.forEach((el) => {
     el.classList.remove(INACTIVE_CLASS);
     INTERACTIVE_TAGS.forEach((tag) => {
       const children = el.querySelectorAll(tag);
@@ -228,13 +228,16 @@ const initFormListeners = (onSubmitSuccess, onSubmitError, resetMarker, addFilte
   FIELD_ROOMS_NUMBER.addEventListener('change', fieldRoomsChangeCountHandler);
   FORM.addEventListener('submit', createSubmitHandler(onSubmitSuccess, onSubmitError));
   RESET_BUTTON.addEventListener('click', createResetHandler(resetMarker));
-  MAP_FILTERS_TYPE.addEventListener('change', createTypeChangeHandler(addFilteredPins))
-  MAP_FILTERS_PRICE.addEventListener('change', createPriceChangeHandler(addFilteredPins))
-  MAP_FILTERS_ROOMS.addEventListener('change', createRoomsChangeHandler(addFilteredPins))
-  MAP_FILTERS_GUESTS.addEventListener('change', createGuestsChangeHandler(addFilteredPins))
-  mapFormCheckboxes.forEach((id) => {
-    document.querySelector(id).addEventListener('change', createFeatureChangeHandler(addFilteredPins, id));
-  })
+  if (addFilteredPins) {
+    MAP_FILTERS_TYPE.addEventListener('change', createTypeChangeHandler(addFilteredPins))
+    MAP_FILTERS_PRICE.addEventListener('change', createPriceChangeHandler(addFilteredPins))
+    MAP_FILTERS_ROOMS.addEventListener('change', createRoomsChangeHandler(addFilteredPins))
+    MAP_FILTERS_GUESTS.addEventListener('change', createGuestsChangeHandler(addFilteredPins))
+    mapFormCheckboxes.forEach((id) => {
+      document.querySelector(id).addEventListener('change', createFeatureChangeHandler(addFilteredPins, id));
+    })
+  }
+
 }
 
 const setElementValue = (el, value) => {
@@ -282,4 +285,4 @@ const resetForms = () => {
   formSelectors.forEach(selector => setElementValue(selector, false))
 }
 
-export { initFormListeners, makesFormsActive, makesFormsInactive, updateAddress };
+export { initFormListeners, makesFormsActive, makesFormsInactive, updateAddress, FORM, MAP_FILTERS };

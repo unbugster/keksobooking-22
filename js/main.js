@@ -1,5 +1,5 @@
 import { getAdsData } from './data.js';
-import { initFormListeners, makesFormsActive, makesFormsInactive, updateAddress } from './form.js';
+import { initFormListeners, makesFormsActive, makesFormsInactive, updateAddress, FORM, MAP_FILTERS } from './form.js';
 import { addPins, initMap, resetMainMarkerPosition } from './map.js';
 import { getCardElement } from './similar-ads.js';
 import { initSuccessPopup, openSuccessMessagePopup, openErrorMessagePopup, initErrorPopup, initDataErrorPopup, openDataErrorPopup } from './popup.js';
@@ -10,24 +10,23 @@ makesFormsInactive();
 initDataErrorPopup();
 const MAX_PINS = 10;
 
+const resetMarker = () => {
+  const coords = resetMainMarkerPosition();
+  updateAddress(coords);
+}
+
+const onFormSubmitSuccess = () => {
+  openSuccessMessagePopup();
+  resetMarker();
+}
+const onFormSubmitError = () => {
+  openErrorMessagePopup();
+}
+
 getAdsData()
   .then((ads) => {
     const points = ads.map(({ location: { lat, lng } }) => ({ lat, lng }))
     const renderAd = (index) => getCardElement(ads[index]);
-
-    const resetMarker = () => {
-      const coords = resetMainMarkerPosition();
-
-      updateAddress(coords);
-    }
-
-    const onFormSubmitSuccess = () => {
-      openSuccessMessagePopup();
-      resetMarker();
-    }
-    const onFormSubmitError = () => {
-      openErrorMessagePopup();
-    }
 
     const addFilteredPins = (filterValue) => {
       const filterByType = (ad) => {
@@ -99,10 +98,15 @@ getAdsData()
     const handleMapLoad = () => {
       addPins(points.slice(0, MAX_PINS), renderAd);
       initFormListeners(onFormSubmitSuccess, onFormSubmitError, resetMarker, addFilteredPins);
-      makesFormsActive();
+      makesFormsActive([FORM, MAP_FILTERS]);
     };
 
     initMap(handleMapLoad, updateAddress);
   }).catch(() => {
+    const handleMapLoad = () => {
+      makesFormsActive([FORM]);
+    };
+    initFormListeners(onFormSubmitSuccess, onFormSubmitError, resetMarker);
     openDataErrorPopup();
+    initMap(handleMapLoad, updateAddress);
   })
