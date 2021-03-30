@@ -1,20 +1,24 @@
 import { createAd } from './data.js';
 
+const MAP_FILTERS = document.querySelector('.map__filters');
+const MAP_FILTERS_TYPE = document.querySelector('#housing-type');
+const MAP_FILTERS_PRICE = document.querySelector('#housing-price');
+const MAP_FILTERS_ROOMS = document.querySelector('#housing-rooms');
+const MAP_FILTERS_GUESTS = document.querySelector('#housing-guests');
+
+const FORM = document.querySelector('.ad-form');
 const FIELD_TYPE = document.querySelector('#type');
 const FIELD_PRICE = document.querySelector('#price');
 const FIELD_TIME_IN = document.querySelector('#timein');
 const FIELD_TIME_OUT = document.querySelector('#timeout');
-const FORM = document.querySelector('.ad-form');
-const MAP_FILTERS = document.querySelector('.map__filters');
 const FIELD_ADDRESS = FORM.querySelector('#address');
 const USER_TITLE_INPUT = document.querySelector('#title');
 const FIELD_CAPACITY = document.querySelector('#capacity');
 const FIELD_ROOMS_NUMBER = document.querySelector('#room_number');
 const OPTIONS = FIELD_CAPACITY.querySelectorAll('option');
+const RESET_BUTTON = document.querySelector('.ad-form__reset');
 const DEGREE = 5;
 const INACTIVE_CLASS = 'ad-form--disabled';
-
-const resetButton = document.querySelector('.ad-form__reset');
 
 const INTERACTIVE_TAGS = [
   'select',
@@ -170,13 +174,67 @@ const createResetHandler = (onReset) => {
   }
 }
 
-const initFormListeners = (onSubmitSuccess, onSubmitError, resetMarker) => {
+const Filters = {
+  type: 'any',
+  price: 'any',
+  rooms: 'any',
+  guests: 'any',
+  wifi: false,
+  dishwasher: false,
+  parking: false,
+  washer: false,
+  elevator: false,
+  conditioner: false,
+}
+
+const createTypeChangeHandler = (addFilteredPins) => {
+  return (evt) => {
+    Filters.type = evt.target.value;
+    addFilteredPins(Filters);
+  }
+}
+
+const createPriceChangeHandler = (addFilteredPins) => {
+  return (evt) => {
+    Filters.price = evt.target.value;
+    addFilteredPins(Filters);
+  }
+}
+
+const createRoomsChangeHandler = (addFilteredPins) => {
+  return (evt) => {
+    Filters.rooms = evt.target.value;
+    addFilteredPins(Filters);
+  }
+}
+
+const createGuestsChangeHandler = (addFilteredPins) => {
+  return (evt) => {
+    Filters.guests = evt.target.value;
+    addFilteredPins(Filters);
+  }
+}
+
+const createFeatureChangeHandler = (addFilteredPins, id) => {
+  return (evt) => {
+    Filters[id.slice(8)] = evt.target.checked;
+    addFilteredPins(Filters);
+  }
+}
+const initFormListeners = (onSubmitSuccess, onSubmitError, resetMarker, addFilteredPins) => {
   FIELD_TYPE.addEventListener('change', fieldHouseTypeChangeHandler);
   FIELD_TIME_IN.addEventListener('change', fieldTimeInChangeHandler);
   FIELD_TIME_OUT.addEventListener('change', fieldTimeOutChangeHandler);
   FIELD_ROOMS_NUMBER.addEventListener('change', fieldRoomsChangeCountHandler);
   FORM.addEventListener('submit', createSubmitHandler(onSubmitSuccess, onSubmitError));
-  resetButton.addEventListener('click', createResetHandler(resetMarker));
+  RESET_BUTTON.addEventListener('click', createResetHandler(resetMarker));
+  MAP_FILTERS_TYPE.addEventListener('change', createTypeChangeHandler(addFilteredPins))
+  MAP_FILTERS_PRICE.addEventListener('change', createPriceChangeHandler(addFilteredPins))
+  MAP_FILTERS_ROOMS.addEventListener('change', createRoomsChangeHandler(addFilteredPins))
+  MAP_FILTERS_GUESTS.addEventListener('change', createGuestsChangeHandler(addFilteredPins))
+  mapFormCheckboxes.forEach((id) => {
+    document.querySelector(id).addEventListener('change', createFeatureChangeHandler(addFilteredPins, id));
+  })
 }
 
 const setElementValue = (el, value) => {

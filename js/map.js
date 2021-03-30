@@ -81,9 +81,11 @@ const icon = L.icon({
  * @param {*} renderAd по клику вызывает обработчик.
  */
 
+let markers = [];
 const addPins = (points, renderAd) => {
+  markers.forEach((marker) => map.removeLayer(marker))
+  markers = []
   points.forEach(({ lat, lng }, index) => {
-
     const marker = L.marker(
       {
         lat,
@@ -92,7 +94,7 @@ const addPins = (points, renderAd) => {
       {
         icon,
       });
-
+    markers.push(marker);
     marker.addTo(map).bindPopup(
       renderAd(index),
       {
