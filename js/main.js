@@ -93,6 +93,7 @@ const LOCATIONS = {
 };
 
 const DIGITS_COUNT = 2;
+const ADS_COUNT = 10;
 
 const getRandomList = (array) => {
   const newArray = array.filter((el) => {
@@ -142,14 +143,5 @@ const getRandomAd = () => {
   }
 };
 
-const getTenRandomAds = () => {
-  let result = [];
-
-  for (let i = 1; i <= 10; i++) {
-    result.push(getRandomAd());
-  }
-
-  return result;
-};
-
-console.log(getTenRandomAds())
+const randomAdsCount = new Array(ADS_COUNT).fill(null).map(() => getRandomAd());
+console.log(randomAdsCount)
