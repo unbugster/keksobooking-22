@@ -22,6 +22,7 @@ const getRandomFloatBetween = (min, max, decimalPlaces = 0) => {
   if (isNaN(decimalPlaces) || decimalPlaces < 0) {
     throw new Error('Invalid argument entered.');
   }
+
   const multiplier = Math.pow(10, decimalPlaces);
 
   return getRandomInt(min * multiplier, max * multiplier) / multiplier;
