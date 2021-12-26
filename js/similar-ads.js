@@ -21,6 +21,7 @@ const SELECTORS = {
   avatar: '.popup__avatar',
   feature: '.popup__feature',
 };
+const isHtml = true;
 
 const pasteContent = (el, elClass, content, type) => {
   const element = el.querySelector(elClass);
@@ -49,6 +50,8 @@ const generateAds = (randomAds) => {
     const adElement = templateAd.cloneNode(true);
     pasteContent(adElement, SELECTORS.title, offer.title);
     pasteContent(adElement, SELECTORS.address, offer.address);
+    pasteContent(adElement, SELECTORS.price, getPriceText(offer.price), isHtml)
+    pasteContent(adElement, SELECTORS.type, HOUSE_TYPES[offer.type])
 
     fragmentAds.appendChild(adElement);
   })
