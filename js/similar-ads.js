@@ -8,6 +8,7 @@ const HOUSE_TYPES = {
   house: 'Дом',
   palace: 'Дворец',
 };
+
 const SELECTORS = {
   title: '.popup__title',
   address: '.popup__text--address',
@@ -23,8 +24,8 @@ const SELECTORS = {
 };
 const isHtml = true;
 
-const pasteContent = (el, elClass, content, type) => {
-  const element = el.querySelector(elClass);
+const pasteContent = (el, cl, content, type) => {
+  const element = el.querySelector(cl);
   if (!element) {
     return;
   }
@@ -44,6 +45,13 @@ const getRoomsAndGuestsText = (rooms, guests) => `${rooms} комнаты для
 const getChecksText = (checkin, checkpout) => `Заезд после ${checkin}, выезд до ${checkpout}`;
 const getPriceText = (price) => `${price} <span>₽/ночь</span>`
 
+const displayFeatures = (el, cl, features) => {
+  features.forEach((feature) => {
+    const f = el.querySelector(`${cl}--${feature}`);
+    f.style.display = 'inline-block';
+  })
+}
+
 const generateAds = (randomAds) => {
   randomAds.forEach((ad) => {
     const { offer, author } = ad;
@@ -52,7 +60,14 @@ const generateAds = (randomAds) => {
     pasteContent(adElement, SELECTORS.address, offer.address);
     pasteContent(adElement, SELECTORS.price, getPriceText(offer.price), isHtml)
     pasteContent(adElement, SELECTORS.type, HOUSE_TYPES[offer.type])
-
+    pasteContent(adElement, SELECTORS.capacity, getRoomsAndGuestsText(offer.rooms, offer.guests));
+    pasteContent(adElement, SELECTORS.time, getChecksText(offer.checkin, offer.checkout));
+    pasteContent(adElement, SELECTORS.description, offer.description);
+    displayFeatures(adElement, SELECTORS.feature, offer.features);
     fragmentAds.appendChild(adElement);
   })
 }
+
+export { generateAds }
+
+
