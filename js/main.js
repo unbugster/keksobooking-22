@@ -1,3 +1,3 @@
 import { getRandomAdsCount } from './data.js';
 
-getRandomAdsCount()
+const ads = getRandomAdsCount()
