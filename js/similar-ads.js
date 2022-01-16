@@ -29,10 +29,12 @@ const pasteContent = (el, cl, content, type) => {
   if (!element) {
     return;
   }
+
   if (!content) {
     element.style.display = 'none';
     return;
   }
+
   if (type) {
     element.innerHTML = content;
     return;
@@ -52,6 +54,36 @@ const displayFeatures = (el, cl, features) => {
   })
 }
 
+const templatePhoto = document.querySelector('#popup__img-photo').content.querySelector('popup__img-photo');
+
+const pastPhotos = (el, photos) => {
+const photosFragment = document.createDocumentFragment();
+const photosParent = el.querySelector('.popup__photo');
+
+photos.forEach((imgSrc) => {
+  const photo = templatePhoto.cloneNode(true);
+  photo.src = imgSrc;
+  photosFragment.appendChild(photo);
+})
+
+photosParent.appendChild(photosFragment);
+}
+
+const pastAvatar = (el, cl, content) => {
+  const child = el.querySelector(cl);
+
+  if (!child) {
+    return;
+  }
+
+  if (!content) {
+    child.style.display = 'none';
+    return;
+  }
+
+  child.src = content;
+};
+
 const generateAds = (randomAds) => {
   randomAds.forEach((ad) => {
     const { offer, author } = ad;
@@ -64,6 +96,10 @@ const generateAds = (randomAds) => {
     pasteContent(adElement, SELECTORS.time, getChecksText(offer.checkin, offer.checkout));
     pasteContent(adElement, SELECTORS.description, offer.description);
     displayFeatures(adElement, SELECTORS.feature, offer.features);
+    pasteContent(adElement, SELECTORS.description, offer.description);
+    pastPhotos(adElement,offer.photos);
+    pastAvatar(adElement, SELECTORS.avatar, author.avatar);
+
     fragmentAds.appendChild(adElement);
   })
 }
