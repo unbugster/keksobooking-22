@@ -97,7 +97,7 @@ const generateAds = (randomAds) => {
     pasteContent(adElement, SELECTORS.description, offer.description);
     displayFeatures(adElement, SELECTORS.feature, offer.features);
     pasteContent(adElement, SELECTORS.description, offer.description);
-    pastPhotos(adElement,offer.photos);
+    pastPhotos(adElement, offer.photos);
     pastAvatar(adElement, SELECTORS.avatar, author.avatar);
 
     fragmentAds.appendChild(adElement);

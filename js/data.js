@@ -97,8 +97,8 @@ const getRandomAd = () => {
   }
 };
 
-const getRandomAdsCount = () => {
-  return new Array(ADS_COUNT).fill(null).map(() => getRandomAd());
+const generateRandomAds = (num) => {
+  return new Array(num).fill(null).map(() => getRandomAd());
 }
 
-export { getRandomAdsCount };
+export { generateRandomAds, ADS_COUNT };

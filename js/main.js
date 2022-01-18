@@ -1,5 +1,5 @@
-import { getRandomAdsCount } from './data.js';
+import { generateRandomAds , ADS_COUNT} from './data.js';
 import { generateAds } from './similar-ads.js';
 
-const ads = getRandomAdsCount();
+const ads = generateRandomAds(ADS_COUNT);
 generateAds(ads);
