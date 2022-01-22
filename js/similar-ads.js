@@ -22,6 +22,7 @@ const SELECTORS = {
   avatar: '.popup__avatar',
   feature: '.popup__feature',
 };
+
 const isHtml = true;
 
 const pasteContent = (el, cl, content, type) => {
@@ -45,14 +46,14 @@ const pasteContent = (el, cl, content, type) => {
 
 const getRoomsAndGuestsText = (rooms, guests) => `${rooms} комнаты для ${guests} гостей`;
 const getChecksText = (checkin, checkpout) => `Заезд после ${checkin}, выезд до ${checkpout}`;
-const getPriceText = (price) => `${price} <span>₽/ночь</span>`
+const getPriceText = (price) => `${price} <span>₽/ночь</span>`;
 
 const displayFeatures = (el, cl, features) => {
   features.forEach((feature) => {
     const f = el.querySelector(`${cl}--${feature}`);
     f.style.display = 'inline-block';
   })
-}
+};
 
 const templatePhoto = document.querySelector('#popup__img-photo');
 const templateContent = templatePhoto.content;
@@ -69,7 +70,7 @@ const pastPhotos = (el, photos) => {
   })
 
   photosParent.appendChild(photosFragment);
-}
+};
 
 const pastAvatar = (el, cl, content) => {
   const child = el.querySelector(cl);
@@ -106,7 +107,7 @@ const generateAds = (randomAds) => {
   })
 
   return fragmentAds;
-}
+};
 
 export { generateAds }
 

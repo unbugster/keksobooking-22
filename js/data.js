@@ -96,11 +96,11 @@ const getRandomAd = () => {
       x: locationX,
       y: locationY,
     },
-  }
+  };
 };
 
 const generateRandomAds = () => {
   return new Array(ADS_COUNT).fill(null).map(() => getRandomAd());
-}
+};
 
-export { generateRandomAds , mapCanvas };
+export { generateRandomAds, mapCanvas };
