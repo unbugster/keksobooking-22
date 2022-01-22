@@ -54,19 +54,21 @@ const displayFeatures = (el, cl, features) => {
   })
 }
 
-const templatePhoto = document.querySelector('#popup__img-photo').content.querySelector('popup__img-photo');
+const templatePhoto = document.querySelector('#popup__img-photo');
+const templateContent = templatePhoto.content;
+const templateImage = templateContent.querySelector('.popup__photo');
 
 const pastPhotos = (el, photos) => {
-const photosFragment = document.createDocumentFragment();
-const photosParent = el.querySelector('.popup__photo');
+  const photosFragment = document.createDocumentFragment();
+  const photosParent = el.querySelector('.popup__photos');
 
-photos.forEach((imgSrc) => {
-  const photo = templatePhoto.cloneNode(true);
-  photo.src = imgSrc;
-  photosFragment.appendChild(photo);
-})
+  photos.forEach((imgSrc) => {
+    const photo = templateImage.cloneNode(true);
+    photo.src = imgSrc;
+    photosFragment.appendChild(photo);
+  })
 
-photosParent.appendChild(photosFragment);
+  photosParent.appendChild(photosFragment);
 }
 
 const pastAvatar = (el, cl, content) => {
@@ -102,6 +104,8 @@ const generateAds = (randomAds) => {
 
     fragmentAds.appendChild(adElement);
   })
+
+  return fragmentAds;
 }
 
 export { generateAds }

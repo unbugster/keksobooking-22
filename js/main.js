@@ -1,5 +1,6 @@
-import { generateRandomAds , ADS_COUNT} from './data.js';
+import { generateRandomAds , mapCanvas } from './data.js';
 import { generateAds } from './similar-ads.js';
 
-const ads = generateRandomAds(ADS_COUNT);
-generateAds(ads);
+const ads = generateRandomAds();
+const tenRandomAds = generateAds(ads);
+mapCanvas.appendChild(tenRandomAds.children[0]);
