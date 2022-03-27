@@ -1,12 +1,14 @@
 const isFormActive = (boolean) => {
   const adForm = document.querySelector('.ad-form');
-  const fieldsets = adForm.querySelectorAll('fieldset');
+  const adFormFieldsets = adForm.querySelectorAll('fieldset');
   const mapFilterForm = document.querySelector('.map__filters');
   const selects = mapFilterForm.querySelectorAll('select');
+  const mapFormFieldset = mapFilterForm.querySelector('fieldset');
 
   if (boolean) {
     adForm.classList.remove('ad-form--disabled');
-    fieldsets.forEach((el) => el.removeAttribute('disabled'));
+    adFormFieldsets.forEach((el) => el.removeAttribute('disabled'));
+    mapFormFieldset.removeAttribute('disabled');
     mapFilterForm.classList.remove('map__filters--disabled');
     selects.forEach((el) => el.removeAttribute('disabled'));
     console.log('good', 'good');
@@ -14,7 +16,8 @@ const isFormActive = (boolean) => {
 
   else {
     adForm.classList.add('ad-form--disabled');
-    fieldsets.forEach((el) => el.setAttribute('disabled', true));
+    adFormFieldsets.forEach((el) => el.setAttribute('disabled', true));
+    mapFormFieldset.setAttribute('disabled', true);
     mapFilterForm.classList.add('map__filters--disabled');
     selects.forEach((el) => el.setAttribute('disabled', true));
     console.log('bad', 'bad');
