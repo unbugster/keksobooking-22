@@ -11,7 +11,6 @@ const isFormActive = (boolean) => {
     mapFormFieldset.removeAttribute('disabled');
     mapFilterForm.classList.remove('map__filters--disabled');
     selects.forEach((el) => el.removeAttribute('disabled'));
-    console.log('good', 'good');
   }
 
   else {
@@ -20,7 +19,6 @@ const isFormActive = (boolean) => {
     mapFormFieldset.setAttribute('disabled', true);
     mapFilterForm.classList.add('map__filters--disabled');
     selects.forEach((el) => el.setAttribute('disabled', true));
-    console.log('bad', 'bad');
   }
 }
 
