@@ -104,3 +104,4 @@ const generateRandomAds = () => {
 };
 
 export { generateRandomAds, mapCanvas };
+
