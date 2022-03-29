@@ -1,6 +1,8 @@
 import { getRandomArrayElement, getRandomInt, getRandomFloatBetween, getRandomList, formattedNumber } from './util.js';
 
 const mapCanvas = document.querySelector('#map-canvas');
+const DIGITS_COUNT = 2;
+const ADS_COUNT = 10;
 
 const TITLES = [
   'Title1',
@@ -66,9 +68,6 @@ const LOCATIONS = {
   minY: 139.70000,
   maxY: 139.80000,
 };
-
-const DIGITS_COUNT = 2;
-const ADS_COUNT = 10;
 
 const getRandomAd = () => {
   let myNumber = getRandomInt(1, 8);
