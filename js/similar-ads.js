@@ -23,10 +23,9 @@ const SELECTORS = {
   feature: '.popup__feature',
 };
 
-const isHtml = true;
 
-const pasteContent = (el, cl, content, type) => {
-  const element = el.querySelector(cl);
+const pasteContent = (el, selector, content, isHtml) => {
+  const element = el.querySelector(selector);
   if (!element) {
     return;
   }
@@ -36,7 +35,7 @@ const pasteContent = (el, cl, content, type) => {
     return;
   }
 
-  if (type) {
+  if (isHtml) {
     element.innerHTML = content;
     return;
   }
@@ -46,11 +45,11 @@ const pasteContent = (el, cl, content, type) => {
 
 const getRoomsAndGuestsText = (rooms, guests) => `${rooms} комнаты для ${guests} гостей`;
 const getChecksText = (checkin, checkpout) => `Заезд после ${checkin}, выезд до ${checkpout}`;
-const getPriceText = (price) => `${price} <span>₽/ночь</span>`;
+const getPriceHtml = (price) => `${price} <span>₽/ночь</span>`;
 
-const displayFeatures = (el, cl, features) => {
+const displayFeatures = (el, selector, features) => {
   features.forEach((feature) => {
-    const f = el.querySelector(`${cl}--${feature}`);
+    const f = el.querySelector(`${selector}--${feature}`);
     f.style.display = 'inline-block';
   })
 };
@@ -59,7 +58,7 @@ const templatePhoto = document.querySelector('#popup__img-photo');
 const templateContent = templatePhoto.content;
 const templateImage = templateContent.querySelector('.popup__photo');
 
-const pastPhotos = (el, photos) => {
+const pastePhotos = (el, photos) => {
   const photosFragment = document.createDocumentFragment();
   const photosParent = el.querySelector('.popup__photos');
 
@@ -72,9 +71,8 @@ const pastPhotos = (el, photos) => {
   photosParent.appendChild(photosFragment);
 };
 
-const pastAvatar = (el, cl, content) => {
-  const child = el.querySelector(cl);
-
+const pasteAvatar = (el, selector, content) => {
+  const child = el.querySelector(selector);
   if (!child) {
     return;
   }
@@ -87,6 +85,7 @@ const pastAvatar = (el, cl, content) => {
   child.src = content;
 };
 
+<<<<<<< HEAD
 const generateAd = (ad) => {
   const { offer, author } = ad;
   const adElement = templateAd.cloneNode(true);
@@ -107,7 +106,6 @@ const generateAd = (ad) => {
 const generateAds = (randomAds) => {
   randomAds.forEach((ad) => {
     const adElement = generateAd(ad);
-
     fragmentAds.appendChild(adElement);
   })
 
@@ -115,5 +113,6 @@ const generateAds = (randomAds) => {
 };
 
 export { generateAds, generateAd }
+
 
 

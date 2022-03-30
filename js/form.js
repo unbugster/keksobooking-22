@@ -26,11 +26,12 @@ const fieldTimeOutChangeHandler = (evt) => {
   fieldTimeIn.value = value;
 };
 
-const formListeners = () => {
+
+const addFormListeners = () => {
   fieldType.addEventListener('change', fieldHouseTypeChangeHandler);
   fieldTimeIn.addEventListener('change', fieldTimeInChangeHandler);
   fieldTimeOut.addEventListener('change', fieldTimeOutChangeHandler);
 };
 
-export { formListeners };
+export { addFormListeners };
 
