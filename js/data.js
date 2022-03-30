@@ -73,7 +73,7 @@ const getRandomAd = () => {
   let myNumber = getRandomInt(1, 8);
   const locationX = getRandomFloatBetween(LOCATIONS.minX, LOCATIONS.maxX, DIGITS_COUNT);
   const locationY = getRandomFloatBetween(LOCATIONS.minY, LOCATIONS.maxY, DIGITS_COUNT);
-
+  const chechinOut = getRandomArrayElement(CHECKS);
   return {
     author: {
       avatar: `img/avatars/user${formattedNumber(myNumber)}.png`,
@@ -85,8 +85,8 @@ const getRandomAd = () => {
       type: getRandomArrayElement(TYPE),
       rooms: getRandomInt(ROOMS.min, ROOMS.max),
       guests: getRandomInt(GUESTS.min, GUESTS.max),
-      checkin: getRandomArrayElement(CHECKS),
-      checkout: getRandomArrayElement(CHECKS),
+      checkin: chechinOut,
+      checkout: chechinOut,
       features: getRandomList(FEATURES),
       description: DESCRIPTION[getRandomInt(0, 3)],
       photos: getRandomList(PHOTOS),
