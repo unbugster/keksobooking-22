@@ -1,4 +1,5 @@
 import { isFormActive } from './inactive-form.js';
+import { generateAd } from './similar-ads.js';
 
 const map = L.map('map-canvas')
   .on('load', () => {
@@ -64,10 +65,14 @@ const addPins = (ads) => {
         icon: pinIcon,
       },
     );
-
     marker
       .addTo(map)
-      .bindPopup();
+      .bindPopup(
+        generateAd(ad),
+        {
+          keepInView: true,
+        },
+      );
   });
 }
 

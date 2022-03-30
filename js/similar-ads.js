@@ -87,21 +87,26 @@ const pastAvatar = (el, cl, content) => {
   child.src = content;
 };
 
+const generateAd = (ad) => {
+  const { offer, author } = ad;
+  const adElement = templateAd.cloneNode(true);
+  pasteContent(adElement, SELECTORS.title, offer.title);
+  pasteContent(adElement, SELECTORS.address, offer.address);
+  pasteContent(adElement, SELECTORS.price, getPriceText(offer.price), isHtml)
+  pasteContent(adElement, SELECTORS.type, HOUSE_TYPES[offer.type])
+  pasteContent(adElement, SELECTORS.capacity, getRoomsAndGuestsText(offer.rooms, offer.guests));
+  pasteContent(adElement, SELECTORS.time, getChecksText(offer.checkin, offer.checkout));
+  pasteContent(adElement, SELECTORS.description, offer.description);
+  displayFeatures(adElement, SELECTORS.feature, offer.features);
+  // pasteContent(adElement, SELECTORS.description, offer.description);
+  pastPhotos(adElement, offer.photos);
+  pastAvatar(adElement, SELECTORS.avatar, author.avatar);
+  return adElement;
+}
+
 const generateAds = (randomAds) => {
   randomAds.forEach((ad) => {
-    const { offer, author } = ad;
-    const adElement = templateAd.cloneNode(true);
-    pasteContent(adElement, SELECTORS.title, offer.title);
-    pasteContent(adElement, SELECTORS.address, offer.address);
-    pasteContent(adElement, SELECTORS.price, getPriceText(offer.price), isHtml)
-    pasteContent(adElement, SELECTORS.type, HOUSE_TYPES[offer.type])
-    pasteContent(adElement, SELECTORS.capacity, getRoomsAndGuestsText(offer.rooms, offer.guests));
-    pasteContent(adElement, SELECTORS.time, getChecksText(offer.checkin, offer.checkout));
-    pasteContent(adElement, SELECTORS.description, offer.description);
-    displayFeatures(adElement, SELECTORS.feature, offer.features);
-    pasteContent(adElement, SELECTORS.description, offer.description);
-    pastPhotos(adElement, offer.photos);
-    pastAvatar(adElement, SELECTORS.avatar, author.avatar);
+    const adElement = generateAd(ad);
 
     fragmentAds.appendChild(adElement);
   })
@@ -109,6 +114,6 @@ const generateAds = (randomAds) => {
   return fragmentAds;
 };
 
-export { generateAds }
+export { generateAds, generateAd }
 
 

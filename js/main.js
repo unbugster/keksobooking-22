@@ -8,8 +8,6 @@ const ads = generateRandomAds();
 console.log('ads', ads);
 addPins(ads)
 const tenRandomAdsFragment = generateAds(ads);
-
-// mapCanvas.appendChild(tenRandomAdsFragment.children[0]);
-
+console.log('tenRandomAdsFragment', tenRandomAdsFragment);
 formListeners();
 isFormActive(true);
