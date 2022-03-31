@@ -23,6 +23,8 @@ const selectValidGuestsByRooms = (guests) => {
   })
 }
 
+selectValidGuestsByRooms([fieldCapacity.value])
+
 const selectedElement = [...guestsOption].find((opt) => opt.selected === true);
 
 const checkCapacityValidity = () => {
@@ -34,6 +36,7 @@ const checkCapacityValidity = () => {
 
   fieldCapacity.reportValidity();
 }
+
 
 const getValuesGuestByRooms = (rooms) => {
   switch (rooms) {
@@ -105,5 +108,6 @@ const checkFieldPriceValidity = () => {
 }
 
 fieldPrice.addEventListener('input', checkFieldPriceValidity);
+
 
 export { addFormListeners };
