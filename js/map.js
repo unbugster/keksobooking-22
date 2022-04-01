@@ -1,22 +1,21 @@
-import { adFormActivationToggle } from './forms-activation.js';
-import { generateAd } from './similar-ads.js';
-
-const map = L.map('map-canvas')
-  .on('load', () => {
+const map = L.map('map-canvas');
+const mapInit = (adFormActivationToggle) => {
+  map.on('load', () => {
     console.log('Карта инициализирована')
     adFormActivationToggle(true);
   })
-  .setView({
-    lat: 35.6895,
-    lng: 139.69171,
-  }, 10);
+    .setView({
+      lat: 35.6895,
+      lng: 139.69171,
+    }, 10);
 
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
+}
 
 const mainPinIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
@@ -53,7 +52,7 @@ mainPinMarker.on('moveend', (evt) => {
   address.value = `${lat.toFixed(5)},${lng.toFixed(5)}`;
 });
 
-const addPins = (ads) => {
+const addPins = (ads, generateAd) => {
   ads.forEach((ad) => {
     const { x: lat, y: lng } = ad.location;
     const marker = L.marker(
@@ -76,4 +75,4 @@ const addPins = (ads) => {
   });
 }
 
-export { addPins }
+export { mapInit, addPins }

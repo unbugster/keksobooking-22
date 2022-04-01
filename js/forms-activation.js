@@ -11,9 +11,7 @@ const adFormActivationToggle = (on) => {
     mapFormFieldset.removeAttribute('disabled');
     mapFilterForm.classList.remove('map__filters--disabled');
     selects.forEach((el) => el.removeAttribute('disabled'));
-  }
-
-  else {
+  } else {
     adForm.classList.add('ad-form--disabled');
     adFormFieldsets.forEach((el) => el.setAttribute('disabled', true));
     mapFormFieldset.setAttribute('disabled', true);
