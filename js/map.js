@@ -1,10 +1,10 @@
-import { isFormActive } from './inactive-form.js';
+import { adFormActivationToggle } from './forms-activation.js';
 import { generateAd } from './similar-ads.js';
 
 const map = L.map('map-canvas')
   .on('load', () => {
     console.log('Карта инициализирована')
-    isFormActive(true);
+    adFormActivationToggle(true);
   })
   .setView({
     lat: 35.6895,

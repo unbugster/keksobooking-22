@@ -1,11 +1,11 @@
-const isFormActive = (boolean) => {
-  const adForm = document.querySelector('.ad-form');
-  const adFormFieldsets = adForm.querySelectorAll('fieldset');
-  const mapFilterForm = document.querySelector('.map__filters');
-  const selects = mapFilterForm.querySelectorAll('select');
-  const mapFormFieldset = mapFilterForm.querySelector('fieldset');
+const adForm = document.querySelector('.ad-form');
+const adFormFieldsets = adForm.querySelectorAll('fieldset');
+const mapFilterForm = document.querySelector('.map__filters');
+const selects = mapFilterForm.querySelectorAll('select');
+const mapFormFieldset = mapFilterForm.querySelector('fieldset');
 
-  if (boolean) {
+const adFormActivationToggle = (on) => {
+  if (on) {
     adForm.classList.remove('ad-form--disabled');
     adFormFieldsets.forEach((el) => el.removeAttribute('disabled'));
     mapFormFieldset.removeAttribute('disabled');
@@ -22,4 +22,4 @@ const isFormActive = (boolean) => {
   }
 }
 
-export { isFormActive }
+export { adFormActivationToggle }
