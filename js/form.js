@@ -26,7 +26,6 @@ const fieldTimeOutChangeHandler = (evt) => {
   fieldTimeIn.value = value;
 };
 
-
 const addFormListeners = () => {
   fieldType.addEventListener('change', fieldHouseTypeChangeHandler);
   fieldTimeIn.addEventListener('change', fieldTimeInChangeHandler);
