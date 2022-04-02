@@ -1,4 +1,18 @@
 const map = L.map('map-canvas');
+const address = document.querySelector('#address');
+
+const mainPinIcon = L.icon({
+  iconUrl: 'img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
+
+const pinIcon = L.icon({
+  iconUrl: 'img/pin.svg',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+
 const mapInit = (adFormActivationToggle) => {
   map.on('load', () => {
     console.log('Карта инициализирована')
@@ -17,18 +31,6 @@ const mapInit = (adFormActivationToggle) => {
   ).addTo(map);
 }
 
-const mainPinIcon = L.icon({
-  iconUrl: 'img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
-});
-
-const pinIcon = L.icon({
-  iconUrl: 'img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
-});
-
 const mainPinMarker = L.marker(
   {
     lat: 35.6895,
@@ -40,9 +42,6 @@ const mainPinMarker = L.marker(
   },
 );
 
-mainPinMarker.addTo(map);
-
-const address = document.querySelector('#address');
 let latLng = { lat: 35.6895, lng: 139.69171 };
 address.value = `${latLng.lat},${latLng.lng}`;
 
@@ -53,6 +52,7 @@ mainPinMarker.on('moveend', (evt) => {
 });
 
 const addPins = (items) => {
+  mainPinMarker.addTo(map);
   items.map((item) => {
     const { x: lat, y: lng } = item.location;
     const marker = L.marker(
