@@ -85,7 +85,7 @@ const pasteAvatar = (el, selector, content) => {
   child.src = content;
 };
 
-const generateAd = (ad) => {
+const generateAdElement = (ad) => {
   const { offer, author } = ad;
   const adElement = templateAd.cloneNode(true);
   pasteContent(adElement, SELECTORS.title, offer.title);
@@ -103,14 +103,14 @@ const generateAd = (ad) => {
 
 const generateAds = (randomAds) => {
   randomAds.forEach((ad) => {
-    const adElement = generateAd(ad);
+    const adElement = generateAdElement(ad);
     fragmentAds.appendChild(adElement);
   })
 
   return fragmentAds;
 };
 
-export { generateAds, generateAd }
+export { generateAds, generateAdElement }
 
 
 

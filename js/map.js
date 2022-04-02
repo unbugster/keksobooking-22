@@ -52,9 +52,9 @@ mainPinMarker.on('moveend', (evt) => {
   address.value = `${lat.toFixed(5)},${lng.toFixed(5)}`;
 });
 
-const addPins = (ads, generateAd) => {
-  ads.forEach((ad) => {
-    const { x: lat, y: lng } = ad.location;
+const addPins = (items) => {
+  items.map((item) => {
+    const { x: lat, y: lng } = item.location;
     const marker = L.marker(
       {
         lat,
@@ -67,7 +67,7 @@ const addPins = (ads, generateAd) => {
     marker
       .addTo(map)
       .bindPopup(
-        generateAd(ad),
+        item.popupContent,
         {
           keepInView: true,
         },

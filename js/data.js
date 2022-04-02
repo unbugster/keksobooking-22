@@ -73,8 +73,8 @@ const getRandomAd = () => {
   let myNumber = getRandomInt(1, 8);
   const locationX = getRandomFloatBetween(LOCATIONS.minX, LOCATIONS.maxX, DIGITS_COUNT);
   const locationY = getRandomFloatBetween(LOCATIONS.minY, LOCATIONS.maxY, DIGITS_COUNT);
-  const chechIn = getRandomArrayElement(CHECKS);
-  const checkOut = chechIn;
+  const checkIn = getRandomArrayElement(CHECKS);
+  const checkOut = checkIn;
 
   return {
     author: {
@@ -87,7 +87,7 @@ const getRandomAd = () => {
       type: getRandomArrayElement(TYPE),
       rooms: getRandomInt(ROOMS.min, ROOMS.max),
       guests: getRandomInt(GUESTS.min, GUESTS.max),
-      checkin: chechIn,
+      checkin: checkIn,
       checkout: checkOut,
       features: getRandomList(FEATURES),
       description: DESCRIPTION[getRandomInt(0, 3)],
