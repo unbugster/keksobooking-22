@@ -3,6 +3,12 @@ const fieldPrice = document.querySelector('#price');
 const fieldTimeIn = document.querySelector('#timein');
 const fieldTimeOut = document.querySelector('#timeout');
 
+const adForm = document.querySelector('.ad-form');
+const adFormFieldsets = adForm.querySelectorAll('fieldset');
+const mapFilterForm = document.querySelector('.map__filters');
+const selects = mapFilterForm.querySelectorAll('select');
+const mapFormFieldset = mapFilterForm.querySelector('fieldset');
+
 const MIN_PRICE_FOR_HOUSE_TYPE = {
   bungalow: 0,
   flat: 1000,
@@ -32,5 +38,33 @@ const addFormListeners = () => {
   fieldTimeOut.addEventListener('change', fieldTimeOutChangeHandler);
 };
 
-export { addFormListeners };
+
+const adMainFormActivationToggle = (on) => {
+  if (on) {
+    adForm.classList.remove('ad-form--disabled');
+    adFormFieldsets.forEach((el) => el.removeAttribute('disabled'));
+  } else {
+    adForm.classList.add('ad-form--disabled');
+    adFormFieldsets.forEach((el) => el.setAttribute('disabled', true));
+  }
+};
+
+const adMapFormActivationToggle = (on) => {
+  if (on) {
+    mapFormFieldset.removeAttribute('disabled');
+    mapFilterForm.classList.remove('map__filters--disabled');
+    selects.forEach((el) => el.removeAttribute('disabled'));
+  } else {
+    mapFormFieldset.setAttribute('disabled', true);
+    mapFilterForm.classList.add('map__filters--disabled');
+    selects.forEach((el) => el.setAttribute('disabled', true));
+  }
+};
+
+const adFormsActivationToggle = (on) => {
+  adMainFormActivationToggle(on);
+  adMapFormActivationToggle(on);
+};
+
+export { addFormListeners, adFormsActivationToggle };
 

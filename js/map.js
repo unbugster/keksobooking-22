@@ -1,21 +1,18 @@
 const map = L.map('map-canvas');
 const address = document.querySelector('#address');
 
-const mainPinIcon = L.icon({
-  iconUrl: 'img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
-});
+const DEFAULT_LAT_LNG = { lat: 35.6895, lng: 139.69171 };
 
-const pinIcon = L.icon({
-  iconUrl: 'img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
-});
+const onMainPinMarkerChange = (latLng) => {
+  let { lat, lng } = latLng;
+  address.value = `${lat.toFixed(5)},${lng.toFixed(5)}`;
+};
+
+onMainPinMarkerChange(DEFAULT_LAT_LNG);
 
 const mapInit = (adFormActivationToggle) => {
   map.on('load', () => {
-    console.log('Карта инициализирована')
+    console.log('Карта инициализирована');
     adFormActivationToggle(true);
   })
     .setView({
@@ -29,32 +26,43 @@ const mapInit = (adFormActivationToggle) => {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
   ).addTo(map);
-}
+};
 
-const mainPinMarker = L.marker(
-  {
-    lat: 35.6895,
-    lng: 139.69171,
-  },
-  {
-    draggable: true,
-    icon: mainPinIcon,
-  },
-);
+const addMainPinMarker = () => {
+  const mainPinIcon = L.icon({
+    iconUrl: 'img/main-pin.svg',
+    iconSize: [52, 52],
+    iconAnchor: [26, 52],
+  });
 
-let latLng = { lat: 35.6895, lng: 139.69171 };
-address.value = `${latLng.lat},${latLng.lng}`;
+  const mainPinMarker = L.marker(
+    {
+      lat: 35.6895,
+      lng: 139.69171,
+    },
+    {
+      draggable: true,
+      icon: mainPinIcon,
+    },
+  );
+  mainPinMarker.addTo(map);
 
-mainPinMarker.on('moveend', (evt) => {
-  latLng = evt.target.getLatLng();
-  let { lat, lng } = latLng;
-  address.value = `${lat.toFixed(5)},${lng.toFixed(5)}`;
-});
+  mainPinMarker.on('moveend', (evt) => {
+    const latLng = evt.target.getLatLng();
+    onMainPinMarkerChange(latLng);
+  });
+};
 
 const addPins = (items) => {
-  mainPinMarker.addTo(map);
+  const pinIcon = L.icon({
+    iconUrl: 'img/pin.svg',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  });
+
   items.map((item) => {
-    const { x: lat, y: lng } = item.location;
+    const { location, popupContent } = item;
+    const { x: lat, y: lng } = location;
     const marker = L.marker(
       {
         lat,
@@ -67,12 +75,12 @@ const addPins = (items) => {
     marker
       .addTo(map)
       .bindPopup(
-        item.popupContent,
+        popupContent,
         {
           keepInView: true,
         },
       );
   });
-}
+};
 
-export { mapInit, addPins }
+export { mapInit, addPins, addMainPinMarker };
