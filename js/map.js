@@ -1,14 +1,5 @@
 const map = L.map('map-canvas');
-const address = document.querySelector('#address');
-
 const DEFAULT_LAT_LNG = { lat: 35.6895, lng: 139.69171 };
-
-const onMainPinMarkerChange = (latLng) => {
-  let { lat, lng } = latLng;
-  address.value = `${lat.toFixed(5)},${lng.toFixed(5)}`;
-};
-
-onMainPinMarkerChange(DEFAULT_LAT_LNG);
 
 const mapInit = (adFormActivationToggle) => {
   map.on('load', () => {
@@ -28,7 +19,7 @@ const mapInit = (adFormActivationToggle) => {
   ).addTo(map);
 };
 
-const addMainPinMarker = () => {
+const addMainPinMarker = (mainPinAddress) => {
   const mainPinIcon = L.icon({
     iconUrl: 'img/main-pin.svg',
     iconSize: [52, 52],
@@ -49,7 +40,7 @@ const addMainPinMarker = () => {
 
   mainPinMarker.on('moveend', (evt) => {
     const latLng = evt.target.getLatLng();
-    onMainPinMarkerChange(latLng);
+    mainPinAddress(latLng);
   });
 };
 
@@ -83,4 +74,4 @@ const addPins = (items) => {
   });
 };
 
-export { mapInit, addPins, addMainPinMarker };
+export { mapInit, addPins, addMainPinMarker, DEFAULT_LAT_LNG };

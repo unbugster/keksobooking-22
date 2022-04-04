@@ -1,6 +1,5 @@
 import { getRandomArrayElement, getRandomInt, getRandomFloatBetween, getRandomList, formattedNumber } from './util.js';
 
-const mapCanvas = document.querySelector('#map-canvas');
 const DIGITS_COUNT = 2;
 const ADS_COUNT = 10;
 
@@ -104,4 +103,4 @@ const generateRandomAds = () => {
   return new Array(ADS_COUNT).fill(null).map(() => getRandomAd());
 };
 
-export { generateRandomAds, mapCanvas };
+export { generateRandomAds };

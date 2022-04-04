@@ -9,6 +9,13 @@ const mapFilterForm = document.querySelector('.map__filters');
 const selects = mapFilterForm.querySelectorAll('select');
 const mapFormFieldset = mapFilterForm.querySelector('fieldset');
 
+const address = document.querySelector('#address');
+
+const setMainPinMarkerAddress = (latLng) => {
+  const { lat, lng } = latLng;
+  address.value = `${lat.toFixed(5)},${lng.toFixed(5)}`;
+};
+
 const MIN_PRICE_FOR_HOUSE_TYPE = {
   bungalow: 0,
   flat: 1000,
@@ -38,8 +45,7 @@ const addFormListeners = () => {
   fieldTimeOut.addEventListener('change', fieldTimeOutChangeHandler);
 };
 
-
-const adMainFormActivationToggle = (on) => {
+const toggleAdMainFormActiveState = (on) => {
   if (on) {
     adForm.classList.remove('ad-form--disabled');
     adFormFieldsets.forEach((el) => el.removeAttribute('disabled'));
@@ -49,7 +55,7 @@ const adMainFormActivationToggle = (on) => {
   }
 };
 
-const adMapFormActivationToggle = (on) => {
+const toggleAdMapFormActiveState = (on) => {
   if (on) {
     mapFormFieldset.removeAttribute('disabled');
     mapFilterForm.classList.remove('map__filters--disabled');
@@ -62,9 +68,9 @@ const adMapFormActivationToggle = (on) => {
 };
 
 const adFormsActivationToggle = (on) => {
-  adMainFormActivationToggle(on);
-  adMapFormActivationToggle(on);
+  toggleAdMainFormActiveState(on);
+  toggleAdMapFormActiveState(on);
 };
 
-export { addFormListeners, adFormsActivationToggle };
+export { addFormListeners, adFormsActivationToggle, setMainPinMarkerAddress };
 
