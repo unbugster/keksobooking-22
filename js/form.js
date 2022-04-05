@@ -9,13 +9,6 @@ const mapFilterForm = document.querySelector('.map__filters');
 const selects = mapFilterForm.querySelectorAll('select');
 const mapFormFieldset = mapFilterForm.querySelector('fieldset');
 
-const address = document.querySelector('#address');
-
-const setMainPinMarkerAddress = (latLng) => {
-  const { lat, lng } = latLng;
-  address.value = `${lat.toFixed(5)},${lng.toFixed(5)}`;
-};
-
 const MIN_PRICE_FOR_HOUSE_TYPE = {
   bungalow: 0,
   flat: 1000,
@@ -72,5 +65,5 @@ const adFormsActivationToggle = (on) => {
   toggleAdMapFormActiveState(on);
 };
 
-export { addFormListeners, adFormsActivationToggle, setMainPinMarkerAddress };
+export { addFormListeners, adFormsActivationToggle };
 

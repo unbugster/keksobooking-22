@@ -1,5 +1,12 @@
 const map = L.map('map-canvas');
 const DEFAULT_LAT_LNG = { lat: 35.6895, lng: 139.69171 };
+const address = document.querySelector('#address');
+
+const onMainMarkerChange = (latLng) => {
+  const { lat, lng } = latLng;
+  address.value = `${lat.toFixed(5)},${lng.toFixed(5)}`;
+};
+
 
 const mapInit = (adFormActivationToggle) => {
   map.on('load', () => {
@@ -18,6 +25,8 @@ const mapInit = (adFormActivationToggle) => {
     },
   ).addTo(map);
 };
+
+onMainMarkerChange(DEFAULT_LAT_LNG);
 
 const addMainPinMarker = (mainPinAddress) => {
   const mainPinIcon = L.icon({
@@ -74,4 +83,4 @@ const addPins = (items) => {
   });
 };
 
-export { mapInit, addPins, addMainPinMarker, DEFAULT_LAT_LNG };
+export { mapInit, addPins, addMainPinMarker, onMainMarkerChange };
