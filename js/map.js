@@ -1,15 +1,8 @@
-const map = L.map('map-canvas');
+const MAP = L.map('map-canvas');
 const DEFAULT_LAT_LNG = { lat: 35.6895, lng: 139.69171 };
-const address = document.querySelector('#address');
 
-const onMainMarkerChange = (latLng) => {
-  const { lat, lng } = latLng;
-  address.value = `${lat.toFixed(5)},${lng.toFixed(5)}`;
-};
-
-
-const mapInit = (adFormActivationToggle) => {
-  map.on('load', () => {
+const initMap = (adFormActivationToggle) => {
+  MAP.on('load', () => {
     console.log('Карта инициализирована');
     adFormActivationToggle(true);
   })
@@ -23,12 +16,11 @@ const mapInit = (adFormActivationToggle) => {
     {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
-  ).addTo(map);
+  ).addTo(MAP);
 };
 
-onMainMarkerChange(DEFAULT_LAT_LNG);
+const addMainPinMarker = (onMainMarkerChange) => {
 
-const addMainPinMarker = (mainPinAddress) => {
   const mainPinIcon = L.icon({
     iconUrl: 'img/main-pin.svg',
     iconSize: [52, 52],
@@ -37,19 +29,20 @@ const addMainPinMarker = (mainPinAddress) => {
 
   const mainPinMarker = L.marker(
     {
-      lat: 35.6895,
-      lng: 139.69171,
+      lat: DEFAULT_LAT_LNG.lat,
+      lng: DEFAULT_LAT_LNG.lng,
     },
     {
       draggable: true,
       icon: mainPinIcon,
     },
   );
-  mainPinMarker.addTo(map);
+  onMainMarkerChange(DEFAULT_LAT_LNG);
+  mainPinMarker.addTo(MAP);
 
   mainPinMarker.on('moveend', (evt) => {
     const latLng = evt.target.getLatLng();
-    mainPinAddress(latLng);
+    onMainMarkerChange(latLng);
   });
 };
 
@@ -73,7 +66,7 @@ const addPins = (items) => {
       },
     );
     marker
-      .addTo(map)
+      .addTo(MAP)
       .bindPopup(
         popupContent,
         {
@@ -83,4 +76,4 @@ const addPins = (items) => {
   });
 };
 
-export { mapInit, addPins, addMainPinMarker, onMainMarkerChange };
+export { initMap, addPins, addMainPinMarker };

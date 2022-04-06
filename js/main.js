@@ -1,6 +1,6 @@
 import { generateRandomAds } from './data.js';
-import { addFormListeners, adFormsActivationToggle } from './form.js';
-import { addPins, mapInit, addMainPinMarker, onMainMarkerChange } from './map.js';
+import { addFormListeners, toggleAdFormsActivation, setMainMarkerAddress } from './form.js';
+import { addPins, initMap, addMainPinMarker } from './map.js';
 import { generateAdElement } from './similar-ads.js';
 
 const ads = generateRandomAds();
@@ -11,7 +11,7 @@ const pinsData = ads.map((ad) => {
   };
 });
 
-mapInit(adFormsActivationToggle);
+initMap(toggleAdFormsActivation);
 addFormListeners();
 addPins(pinsData);
-addMainPinMarker(onMainMarkerChange);
+addMainPinMarker(setMainMarkerAddress);
