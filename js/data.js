@@ -1,6 +1,7 @@
 import { getRandomArrayElement, getRandomInt, getRandomFloatBetween, getRandomList, formattedNumber } from './util.js';
 
-const mapCanvas = document.querySelector('#map-canvas');
+const DIGITS_COUNT = 2;
+const ADS_COUNT = 10;
 
 const TITLES = [
   'Title1',
@@ -67,13 +68,12 @@ const LOCATIONS = {
   maxY: 139.80000,
 };
 
-const DIGITS_COUNT = 2;
-const ADS_COUNT = 10;
-
 const getRandomAd = () => {
   let myNumber = getRandomInt(1, 8);
   const locationX = getRandomFloatBetween(LOCATIONS.minX, LOCATIONS.maxX, DIGITS_COUNT);
   const locationY = getRandomFloatBetween(LOCATIONS.minY, LOCATIONS.maxY, DIGITS_COUNT);
+  const checkIn = getRandomArrayElement(CHECKS);
+  const checkOut = checkIn;
 
   return {
     author: {
@@ -86,8 +86,8 @@ const getRandomAd = () => {
       type: getRandomArrayElement(TYPE),
       rooms: getRandomInt(ROOMS.min, ROOMS.max),
       guests: getRandomInt(GUESTS.min, GUESTS.max),
-      checkin: getRandomArrayElement(CHECKS),
-      checkout: getRandomArrayElement(CHECKS),
+      checkin: checkIn,
+      checkout: checkOut,
       features: getRandomList(FEATURES),
       description: DESCRIPTION[getRandomInt(0, 3)],
       photos: getRandomList(PHOTOS),
@@ -103,5 +103,4 @@ const generateRandomAds = () => {
   return new Array(ADS_COUNT).fill(null).map(() => getRandomAd());
 };
 
-export { generateRandomAds, mapCanvas };
-
+export { generateRandomAds };
