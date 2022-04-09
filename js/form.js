@@ -1,42 +1,47 @@
-const fieldType = document.querySelector('#type');
-const fieldPrice = document.querySelector('#price');
-const fieldTimeIn = document.querySelector('#timein');
-const fieldTimeOut = document.querySelector('#timeout');
-const fieldRoomsNumber = document.querySelector('#room_number');
-const fieldCapacity = document.querySelector('#capacity');
+const FIELD_TYPE = document.querySelector('#type');
+const FIELD_PRICE = document.querySelector('#price');
+const FIELD_TIME_IN = document.querySelector('#timein');
+const FIELD_TIME_OUT = document.querySelector('#timeout');
+const FIELD_ROOMS_NUMBER = document.querySelector('#room_number');
+const FIELD_CAPACITY = document.querySelector('#capacity');
+const MAX_PRICE_FOR_NIGHT = 1000000;
+const GUESTS_OPTION = FIELD_CAPACITY.querySelectorAll('option');
+const ADDRESS = document.querySelector('#address');
+const AD_FORM = document.querySelector('.ad-form');
+const AD_FORM_FIELDSETS = AD_FORM.querySelectorAll('fieldset');
+const MAP_FILTER_FORM = document.querySelector('.map__filters');
+const MAP_FILTER_FORM_SELECTS = MAP_FILTER_FORM.querySelectorAll('select');
+const MAP_FORM_FIELDSET = MAP_FILTER_FORM.querySelector('fieldset');
 
 const fieldRoomsChangeHandler = (evt) => {
   const value = evt.target.value;
   const validGuestValue = getValuesGuestByRooms(value);
   selectValidGuestsByRooms(validGuestValue);
-}
-
-const guestsOption = fieldCapacity.querySelectorAll('option');
+};
 
 const selectValidGuestsByRooms = (guests) => {
-  guestsOption.forEach((el) => {
+  GUESTS_OPTION.forEach((el) => {
     if (guests.includes(Number(el.value))) {
       el.disabled = false;
     } else {
       el.disabled = true;
     }
-  })
-}
+  });
+};
 
-selectValidGuestsByRooms([fieldCapacity.value])
-
-const selectedElement = [...guestsOption].find((opt) => opt.selected === true);
+selectValidGuestsByRooms([FIELD_CAPACITY.value]);
 
 const checkCapacityValidity = () => {
+  const selectedElement = [...GUESTS_OPTION].find((opt) => opt.selected === true);
+
   if (selectedElement.disabled) {
-    fieldCapacity.setCustomValidity('Количество гостей не соответствует количеству комнат');
+    FIELD_CAPACITY.setCustomValidity('Количество гостей не соответствует количеству комнат');
   } else {
-    fieldCapacity.setCustomValidity('');
+    FIELD_CAPACITY.setCustomValidity('');
   }
 
-  fieldCapacity.reportValidity();
-}
-
+  FIELD_CAPACITY.reportValidity();
+};
 
 const getValuesGuestByRooms = (rooms) => {
   switch (rooms) {
@@ -49,7 +54,12 @@ const getValuesGuestByRooms = (rooms) => {
     case '100':
       return [0];
   }
-}
+};
+
+const setMainMarkerAddress = (latLng) => {
+  const { lat, lng } = latLng;
+  ADDRESS.value = `${lat.toFixed(5)},${lng.toFixed(5)}`;
+};
 
 const MIN_PRICE_FOR_HOUSE_TYPE = {
   bungalow: 0,
@@ -63,51 +73,74 @@ let minPrice = 0;
 const fieldHouseTypeChangeHandler = (evt) => {
   const value = evt.target.value;
   minPrice = MIN_PRICE_FOR_HOUSE_TYPE[value];
-  fieldPrice.placeholder = minPrice;
+  FIELD_PRICE.placeholder = minPrice;
 
-  if (fieldPrice.value) {
+  if (FIELD_PRICE.value) {
     checkFieldPriceValidity();
   }
 };
 
 const fieldTimeInChangeHandler = (evt) => {
   const value = evt.target.value;
-  fieldTimeOut.value = value;
+  FIELD_TIME_OUT.value = value;
 };
 
 const fieldTimeOutChangeHandler = (evt) => {
   const value = evt.target.value;
-  fieldTimeIn.value = value;
+  FIELD_TIME_IN.value = value;
 };
-
 
 const addFormListeners = () => {
-  fieldType.addEventListener('change', fieldHouseTypeChangeHandler);
-  fieldTimeIn.addEventListener('change', fieldTimeInChangeHandler);
-  fieldTimeOut.addEventListener('change', fieldTimeOutChangeHandler);
-  fieldRoomsNumber.addEventListener('change', fieldRoomsChangeHandler);
-  fieldRoomsNumber.addEventListener('change', checkCapacityValidity);
+  FIELD_TYPE.addEventListener('change', fieldHouseTypeChangeHandler);
+  FIELD_TIME_IN.addEventListener('change', fieldTimeInChangeHandler);
+  FIELD_TIME_OUT.addEventListener('change', fieldTimeOutChangeHandler);
+  FIELD_ROOMS_NUMBER.addEventListener('change', fieldRoomsChangeHandler);
+  FIELD_ROOMS_NUMBER.addEventListener('change', checkCapacityValidity);
 };
 
-const MAX_PRICE_FOR_NIGHT = 1000000;
-
 const checkFieldPriceValidity = () => {
-  const value = fieldPrice.value;
+  const value = FIELD_PRICE.value;
 
-  if (fieldPrice.validity.valueMissing) {
-    fieldPrice.setCustomValidity('Обязательное поле');
+  if (FIELD_PRICE.validity.valueMissing) {
+    FIELD_PRICE.setCustomValidity('Обязательное поле');
   } else if (value > MAX_PRICE_FOR_NIGHT) {
-    fieldPrice.setCustomValidity('Максимальная цена за ночь ' + MAX_PRICE_FOR_NIGHT);
+    FIELD_PRICE.setCustomValidity('Максимальная цена за ночь ' + MAX_PRICE_FOR_NIGHT);
   } else if (value < minPrice) {
-    fieldPrice.setCustomValidity('Минимальная цена за ночь ' + minPrice);
+    FIELD_PRICE.setCustomValidity('Минимальная цена за ночь ' + minPrice);
   } else {
-    fieldPrice.setCustomValidity('');
+    FIELD_PRICE.setCustomValidity('');
   }
 
-  fieldPrice.reportValidity();
-}
+  FIELD_PRICE.reportValidity();
+};
 
-fieldPrice.addEventListener('input', checkFieldPriceValidity);
+FIELD_PRICE.addEventListener('input', checkFieldPriceValidity);
 
+const toggleAdMainFormActiveState = (on) => {
+  if (on) {
+    AD_FORM.classList.remove('ad-form--disabled');
+    AD_FORM_FIELDSETS.forEach((el) => el.removeAttribute('disabled'));
+  } else {
+    AD_FORM.classList.add('ad-form--disabled');
+    AD_FORM_FIELDSETS.forEach((el) => el.setAttribute('disabled', true));
+  }
+};
 
-export { addFormListeners };
+const toggleAdMapFormActiveState = (on) => {
+  if (on) {
+    MAP_FORM_FIELDSET.removeAttribute('disabled');
+    MAP_FILTER_FORM.classList.remove('map__filters--disabled');
+    MAP_FILTER_FORM_SELECTS.forEach((el) => el.removeAttribute('disabled'));
+  } else {
+    MAP_FORM_FIELDSET.setAttribute('disabled', true);
+    MAP_FILTER_FORM.classList.add('map__filters--disabled');
+    MAP_FILTER_FORM_SELECTS.forEach((el) => el.setAttribute('disabled', true));
+  }
+};
+
+const toggleAdFormsActivation = (on) => {
+  toggleAdMainFormActiveState(on);
+  toggleAdMapFormActiveState(on);
+};
+
+export { addFormListeners, toggleAdFormsActivation, setMainMarkerAddress };

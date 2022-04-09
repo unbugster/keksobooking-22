@@ -33,7 +33,7 @@ const getRandomList = (array) => {
     if (getRandomInt(0, 50) > 25) {
       return el;
     }
-  })
+  });
 
   return newArray;
 };
@@ -46,4 +46,4 @@ let formattedNumber = (num) => {
   return ('0' + num).slice(-2);
 };
 
-export { getRandomArrayElement, getRandomInt, getRandomFloatBetween, getRandomList, formattedNumber }
+export { getRandomArrayElement, getRandomInt, getRandomFloatBetween, getRandomList, formattedNumber };
