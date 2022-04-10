@@ -87,7 +87,7 @@ const checkTitleValidity = (evt) => {
   TITLE_INPUT.reportValidity();
 };
 
-const setMainMarkerAddress = (latLng) => {
+const setFormAddress = (latLng) => {
   const { lat, lng } = latLng;
   ADDRESS.value = `${lat.toFixed(5)},${lng.toFixed(5)}`;
 };
@@ -165,4 +165,4 @@ const toggleAdFormsActivation = (on) => {
   toggleAdMapFormActiveState(on);
 };
 
-export { addFormListeners, toggleAdFormsActivation, setMainMarkerAddress };
+export { addFormListeners, toggleAdFormsActivation, setFormAddress };
