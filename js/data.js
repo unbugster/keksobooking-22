@@ -69,7 +69,7 @@ const LOCATIONS = {
 };
 
 const getRandomAd = () => {
-  let myNumber = getRandomInt(1, 8);
+  const myNumber = getRandomInt(1, 8);
   const locationX = getRandomFloatBetween(LOCATIONS.minX, LOCATIONS.maxX, DIGITS_COUNT);
   const locationY = getRandomFloatBetween(LOCATIONS.minY, LOCATIONS.maxY, DIGITS_COUNT);
   const checkIn = getRandomArrayElement(CHECKS);
