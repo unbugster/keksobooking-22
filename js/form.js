@@ -50,10 +50,10 @@ const getValuesGuestByRooms = (rooms) => {
 
 const checkValidity = (evt, field) => {
   const value = evt.target.value;
-  const validValue = (field === FIELD_ROOMS_NUMBER) ? getValuesRoomsByGuest(value) : getValuesGuestByRooms(value);
+  const validValues = (field === FIELD_ROOMS_NUMBER) ? getValuesRoomsByGuest(value) : getValuesGuestByRooms(value);
   const chosenRelatedValue = Number(field.value);
 
-  if (!validValue.includes(chosenRelatedValue)) {
+  if (!validValues.includes(chosenRelatedValue)) {
     FIELD_CAPACITY.setCustomValidity('Количество гостей не соответствует количеству комнат');
   } else {
     FIELD_CAPACITY.setCustomValidity('');
@@ -61,7 +61,6 @@ const checkValidity = (evt, field) => {
 
   FIELD_CAPACITY.reportValidity();
 };
-
 
 const guestsValidationHandler = (evt) => {
   checkValidity(evt, FIELD_ROOMS_NUMBER);
