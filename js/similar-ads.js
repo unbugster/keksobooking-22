@@ -113,6 +113,3 @@ const generateAds = (randomAds) => {
 };
 
 export { generateAds, generateAdElement };
-
-
-

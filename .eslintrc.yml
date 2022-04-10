@@ -12,4 +12,5 @@ extends: "htmlacademy/vanilla"
 
 rules:
   semi: error
+  no-multiple-empty-lines: error
 
