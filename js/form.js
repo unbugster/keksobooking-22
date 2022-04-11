@@ -59,14 +59,14 @@ const runCustomCapacityValidation = (value, validValues) => {
   FIELD_CAPACITY.reportValidity();
 };
 
-const fieldCapacityHandler = (evt) => {
+const fieldCapacityChangeHandler = (evt) => {
   const guestsValue = Number(FIELD_ROOMS_NUMBER.value);
   const validGuestValues = getValuesRoomsByGuest(evt.target.value);
 
   runCustomCapacityValidation(guestsValue, validGuestValues);
 };
 
-const fieldRoomsHandler = (evt) => {
+const fieldRoomsChangeHandler = (evt) => {
   const roomsValue = Number(FIELD_CAPACITY.value);
   const validRoomsValues = getValuesGuestByRooms(evt.target.value);
 
@@ -74,14 +74,14 @@ const fieldRoomsHandler = (evt) => {
 };
 
 const fieldTitleHandler = (evt) => {
-  const valueLength = evt.target.value.length;
+  const titleValueLength = evt.target.value.length;
 
   if (TITLE_INPUT.validity.valueMissing) {
     TITLE_INPUT.setCustomValidity('Обязательное поле');
-  } else if (valueLength < MIN_TITLE_LENGTH) {
-    TITLE_INPUT.setCustomValidity('Ещё ' + (MIN_TITLE_LENGTH - valueLength) + ' симв.');
-  } else if (valueLength > MAX_TITLE_LENGTH) {
-    TITLE_INPUT.setCustomValidity('Удалите лишние ' + (valueLength - MAX_TITLE_LENGTH) + ' симв.');
+  } else if (titleValueLength < MIN_TITLE_LENGTH) {
+    TITLE_INPUT.setCustomValidity('Ещё ' + (MIN_TITLE_LENGTH - titleValueLength) + ' симв.');
+  } else if (titleValueLength > MAX_TITLE_LENGTH) {
+    TITLE_INPUT.setCustomValidity('Удалите лишние ' + (titleValueLength - MAX_TITLE_LENGTH) + ' симв.');
   } else {
     TITLE_INPUT.setCustomValidity('');
   }
@@ -110,17 +110,34 @@ const fieldTimeOutChangeHandler = (evt) => {
   FIELD_TIME_IN.value = value;
 };
 
-const checkFieldPriceValidityHandler = () => {
-  const previouslySetValue = FIELD_PRICE.value;
-  const chosenFieldHouseTypeValue = FIELD_HOUSE_TYPE.value;
-  const minPrice = MIN_PRICE_FOR_HOUSE_TYPE[chosenFieldHouseTypeValue];
+const setMinPriceForHouseTypeValue = (houseType) => {
+  return MIN_PRICE_FOR_HOUSE_TYPE[houseType];
+};
+
+const fieldHouseTypeChangeHanler = (evt) => {
+  const houseType = evt.target.value;
+  const minPrice = setMinPriceForHouseTypeValue(houseType);
+  const price = FIELD_PRICE.value;
+
+  runCustomPriceValidation(price, minPrice);
+};
+
+const fieldPriceChangeHangler = (evt) => {
+  const price = evt.target.price;
+  const houseType = FIELD_HOUSE_TYPE.value;
+  const minPrice = setMinPriceForHouseTypeValue(houseType);
+
+  runCustomPriceValidation(price, minPrice);
+};
+
+const runCustomPriceValidation = (verifiablePrice, minPriceLimit) => {
 
   if (FIELD_PRICE.validity.valueMissing) {
     FIELD_PRICE.setCustomValidity('Обязательное поле');
-  } else if (previouslySetValue > MAX_PRICE_FOR_NIGHT) {
+  } else if (verifiablePrice > MAX_PRICE_FOR_NIGHT) {
     FIELD_PRICE.setCustomValidity('Максимальная цена за ночь ' + MAX_PRICE_FOR_NIGHT);
-  } else if (previouslySetValue < minPrice) {
-    FIELD_PRICE.setCustomValidity('Минимальная цена за ночь ' + minPrice);
+  } else if (verifiablePrice < minPriceLimit) {
+    FIELD_PRICE.setCustomValidity('Минимальная цена за ночь ' + minPriceLimit);
   } else {
     FIELD_PRICE.setCustomValidity('');
   }
@@ -132,10 +149,10 @@ const addFormListeners = () => {
   FIELD_HOUSE_TYPE.addEventListener('change', fieldHouseTypeChangeHandler);
   FIELD_TIME_IN.addEventListener('change', fieldTimeInChangeHandler);
   FIELD_TIME_OUT.addEventListener('change', fieldTimeOutChangeHandler);
-  FIELD_CAPACITY.addEventListener('change', fieldCapacityHandler);
-  FIELD_ROOMS_NUMBER.addEventListener('change', fieldRoomsHandler);
-  FIELD_PRICE.addEventListener('input', checkFieldPriceValidityHandler);
-  FIELD_HOUSE_TYPE.addEventListener('change', checkFieldPriceValidityHandler);
+  FIELD_CAPACITY.addEventListener('change', fieldCapacityChangeHandler);
+  FIELD_ROOMS_NUMBER.addEventListener('change', fieldRoomsChangeHandler);
+  FIELD_PRICE.addEventListener('input', fieldPriceChangeHangler);
+  FIELD_HOUSE_TYPE.addEventListener('change', fieldHouseTypeChangeHanler);
   TITLE_INPUT.addEventListener('input', fieldTitleHandler);
 };
 
