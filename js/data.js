@@ -1,4 +1,4 @@
-import { getRandomArrayElement, getRandomInt, getRandomFloatBetween, getRandomList, addZeroBeforeFigure } from './util.js';
+import { getRandomArrayElement, getRandomInt, getRandomFloatBetween, getRandomList, addZeroBeforeNumber } from './util.js';
 
 const DIGITS_COUNT = 2;
 const ADS_COUNT = 10;
@@ -77,7 +77,7 @@ const getRandomAd = () => {
 
   return {
     author: {
-      avatar: `img/avatars/user${addZeroBeforeFigure(myNumber)}.png`,
+      avatar: `img/avatars/user${addZeroBeforeNumber(myNumber)}.png`,
     },
     offer: {
       title: getRandomArrayElement(TITLES),

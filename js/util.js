@@ -42,8 +42,8 @@ const getRandomArrayElement = (array) => {
   return array[getRandomInt(0, array.length - 1)];
 };
 
-const addZeroBeforeFigure = (num) => {
+const addZeroBeforeNumber = (num) => {
   return ('0' + num).slice(-2);
 };
 
-export { getRandomArrayElement, getRandomInt, getRandomFloatBetween, getRandomList, addZeroBeforeFigure };
+export { getRandomArrayElement, getRandomInt, getRandomFloatBetween, getRandomList, addZeroBeforeNumber };
