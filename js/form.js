@@ -48,12 +48,9 @@ const getValuesGuestByRooms = (rooms) => {
   }
 };
 
-const checkValidity = (evt, field) => {
-  const value = evt.target.value;
-  const validValues = (field === FIELD_ROOMS_NUMBER) ? getValuesRoomsByGuest(value) : getValuesGuestByRooms(value);
-  const chosenRelatedValue = Number(field.value);
+const runCustomCapacityValidation = (value, validValues) => {
 
-  if (!validValues.includes(chosenRelatedValue)) {
+  if (!validValues.includes(value)) {
     FIELD_CAPACITY.setCustomValidity('Количество гостей не соответствует количеству комнат');
   } else {
     FIELD_CAPACITY.setCustomValidity('');
@@ -62,15 +59,21 @@ const checkValidity = (evt, field) => {
   FIELD_CAPACITY.reportValidity();
 };
 
-const guestsValidationHandler = (evt) => {
-  checkValidity(evt, FIELD_ROOMS_NUMBER);
+const fieldCapacityHandler = (evt) => {
+  const guestsValue = Number(FIELD_ROOMS_NUMBER.value);
+  const validGuestValues = getValuesRoomsByGuest(evt.target.value);
+
+  runCustomCapacityValidation(guestsValue, validGuestValues);
 };
 
-const roomsValidationHandler = (evt) => {
-  checkValidity(evt, FIELD_CAPACITY);
+const fieldRoomsHandler = (evt) => {
+  const roomsValue = Number(FIELD_CAPACITY.value);
+  const validRoomsValues = getValuesGuestByRooms(evt.target.value);
+
+  runCustomCapacityValidation(roomsValue, validRoomsValues);
 };
 
-const checkTitleValidity = (evt) => {
+const fieldTitleHandler = (evt) => {
   const valueLength = evt.target.value.length;
 
   if (TITLE_INPUT.validity.valueMissing) {
@@ -107,28 +110,16 @@ const fieldTimeOutChangeHandler = (evt) => {
   FIELD_TIME_IN.value = value;
 };
 
-const addFormListeners = () => {
-  FIELD_HOUSE_TYPE.addEventListener('change', fieldHouseTypeChangeHandler);
-  FIELD_TIME_IN.addEventListener('change', fieldTimeInChangeHandler);
-  FIELD_TIME_OUT.addEventListener('change', fieldTimeOutChangeHandler);
-  FIELD_CAPACITY.addEventListener('change', guestsValidationHandler);
-  FIELD_ROOMS_NUMBER.addEventListener('change', roomsValidationHandler);
-  FIELD_PRICE.addEventListener('input', checkFieldPriceValidityHandler);
-  FIELD_HOUSE_TYPE.addEventListener('change', checkFieldPriceValidityHandler);
-  TITLE_INPUT.addEventListener('input', checkTitleValidity);
-};
-
-const checkFieldPriceValidityHandler = (evt) => {
+const checkFieldPriceValidityHandler = () => {
   const previouslySetValue = FIELD_PRICE.value;
   const chosenFieldHouseTypeValue = FIELD_HOUSE_TYPE.value;
   const minPrice = MIN_PRICE_FOR_HOUSE_TYPE[chosenFieldHouseTypeValue];
-  const value = evt.target.value;
 
   if (FIELD_PRICE.validity.valueMissing) {
     FIELD_PRICE.setCustomValidity('Обязательное поле');
-  } else if (value && previouslySetValue > MAX_PRICE_FOR_NIGHT) {
+  } else if (previouslySetValue > MAX_PRICE_FOR_NIGHT) {
     FIELD_PRICE.setCustomValidity('Максимальная цена за ночь ' + MAX_PRICE_FOR_NIGHT);
-  } else if (value && previouslySetValue < minPrice) {
+  } else if (previouslySetValue < minPrice) {
     FIELD_PRICE.setCustomValidity('Минимальная цена за ночь ' + minPrice);
   } else {
     FIELD_PRICE.setCustomValidity('');
@@ -137,12 +128,22 @@ const checkFieldPriceValidityHandler = (evt) => {
   FIELD_PRICE.reportValidity();
 };
 
+const addFormListeners = () => {
+  FIELD_HOUSE_TYPE.addEventListener('change', fieldHouseTypeChangeHandler);
+  FIELD_TIME_IN.addEventListener('change', fieldTimeInChangeHandler);
+  FIELD_TIME_OUT.addEventListener('change', fieldTimeOutChangeHandler);
+  FIELD_CAPACITY.addEventListener('change', fieldCapacityHandler);
+  FIELD_ROOMS_NUMBER.addEventListener('change', fieldRoomsHandler);
+  FIELD_PRICE.addEventListener('input', checkFieldPriceValidityHandler);
+  FIELD_HOUSE_TYPE.addEventListener('change', checkFieldPriceValidityHandler);
+  TITLE_INPUT.addEventListener('input', fieldTitleHandler);
+};
+
 const toggleAdMainFormActiveState = (on) => {
+  AD_FORM.classList[on ? 'remove' : 'add']('ad-form--disabled');
   if (on) {
-    AD_FORM.classList.remove('ad-form--disabled');
     AD_FORM_FIELDSETS.forEach((el) => el.removeAttribute('disabled'));
   } else {
-    AD_FORM.classList.add('ad-form--disabled');
     AD_FORM_FIELDSETS.forEach((el) => el.setAttribute('disabled', true));
   }
 };
