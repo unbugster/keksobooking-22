@@ -158,6 +158,7 @@ const addFormListeners = () => {
 
 const toggleAdMainFormActiveState = (on) => {
   AD_FORM.classList[on ? 'remove' : 'add']('ad-form--disabled');
+
   if (on) {
     AD_FORM_FIELDSETS.forEach((el) => el.removeAttribute('disabled'));
   } else {
@@ -166,13 +167,13 @@ const toggleAdMainFormActiveState = (on) => {
 };
 
 const toggleAdMapFormActiveState = (on) => {
+  MAP_FILTER_FORM.classList[on ? 'remove' : 'add']('map__filters--disabled');
+
   if (on) {
     MAP_FORM_FIELDSET.removeAttribute('disabled');
-    MAP_FILTER_FORM.classList.remove('map__filters--disabled');
     MAP_FILTER_FORM_SELECTS.forEach((el) => el.removeAttribute('disabled'));
   } else {
     MAP_FORM_FIELDSET.setAttribute('disabled', true);
-    MAP_FILTER_FORM.classList.add('map__filters--disabled');
     MAP_FILTER_FORM_SELECTS.forEach((el) => el.setAttribute('disabled', true));
   }
 };
