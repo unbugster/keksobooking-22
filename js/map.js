@@ -3,13 +3,10 @@ const DEFAULT_LAT_LNG = { lat: 35.6895, lng: 139.69171 };
 
 const initMap = (adFormActivationToggle) => {
   MAP.on('load', () => {
-    console.log('Карта инициализирована');
+    console.log('Карта инициализирована');// eslint-disable-line
     adFormActivationToggle(true);
   })
-    .setView({
-      lat: 35.6895,
-      lng: 139.69171,
-    }, 10);
+    .setView(DEFAULT_LAT_LNG, 10);
 
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -28,10 +25,7 @@ const addMainPinMarker = (onMainMarkerChange) => {
   });
 
   const mainPinMarker = L.marker(
-    {
-      lat: DEFAULT_LAT_LNG.lat,
-      lng: DEFAULT_LAT_LNG.lng,
-    },
+    DEFAULT_LAT_LNG,
     {
       draggable: true,
       icon: mainPinIcon,

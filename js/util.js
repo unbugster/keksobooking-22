@@ -42,8 +42,8 @@ const getRandomArrayElement = (array) => {
   return array[getRandomInt(0, array.length - 1)];
 };
 
-let formattedNumber = (num) => {
+const addZeroBeforeNumber = (num) => {
   return ('0' + num).slice(-2);
 };
 
-export { getRandomArrayElement, getRandomInt, getRandomFloatBetween, getRandomList, formattedNumber };
+export { getRandomArrayElement, getRandomInt, getRandomFloatBetween, getRandomList, addZeroBeforeNumber };

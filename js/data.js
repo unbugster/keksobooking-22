@@ -1,4 +1,4 @@
-import { getRandomArrayElement, getRandomInt, getRandomFloatBetween, getRandomList, formattedNumber } from './util.js';
+import { getRandomArrayElement, getRandomInt, getRandomFloatBetween, getRandomList, addZeroBeforeNumber } from './util.js';
 
 const DIGITS_COUNT = 2;
 const ADS_COUNT = 10;
@@ -69,7 +69,7 @@ const LOCATIONS = {
 };
 
 const getRandomAd = () => {
-  let myNumber = getRandomInt(1, 8);
+  const myNumber = getRandomInt(1, 8);
   const locationX = getRandomFloatBetween(LOCATIONS.minX, LOCATIONS.maxX, DIGITS_COUNT);
   const locationY = getRandomFloatBetween(LOCATIONS.minY, LOCATIONS.maxY, DIGITS_COUNT);
   const checkIn = getRandomArrayElement(CHECKS);
@@ -77,7 +77,7 @@ const getRandomAd = () => {
 
   return {
     author: {
-      avatar: `img/avatars/user${formattedNumber(myNumber)}.png`,
+      avatar: `img/avatars/user${addZeroBeforeNumber(myNumber)}.png`,
     },
     offer: {
       title: getRandomArrayElement(TITLES),
