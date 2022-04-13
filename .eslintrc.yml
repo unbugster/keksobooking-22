@@ -10,6 +10,9 @@ env:
 
 extends: "htmlacademy/vanilla"
 
+globals:
+    L: writable
+
 rules:
   semi: error
   no-multiple-empty-lines:
@@ -17,4 +20,3 @@ rules:
     - max: 1
       maxEOF: 0
       maxBOF: 0
-

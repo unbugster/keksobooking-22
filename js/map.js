@@ -1,4 +1,3 @@
-/* global L:writable */
 const MAP = L.map('map-canvas');
 const DEFAULT_LAT_LNG = { lat: 35.6895, lng: 139.69171 };
 
