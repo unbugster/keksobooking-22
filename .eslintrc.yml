@@ -18,5 +18,3 @@ rules:
       maxEOF: 0
       maxBOF: 0
 
- globals:
-    L: writable

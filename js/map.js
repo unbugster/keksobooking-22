@@ -1,9 +1,10 @@
+/* global L:writable */
 const MAP = L.map('map-canvas');
 const DEFAULT_LAT_LNG = { lat: 35.6895, lng: 139.69171 };
 
 const initMap = (adFormActivationToggle) => {
   MAP.on('load', () => {
-    console.log('Карта инициализирована');
+    console.log('Карта инициализирована');// eslint-disable-line
     adFormActivationToggle(true);
   })
     .setView(DEFAULT_LAT_LNG, 10);
