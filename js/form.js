@@ -109,13 +109,13 @@ const fieldTimeOutChangeHandler = (evt) => {
   FIELD_TIME_IN.value = value;
 };
 
-const setMinPriceForHouseTypeValue = (houseType) => {
+const setMinPriceByTypeOfHouse = (houseType) => {
   return MIN_PRICE_FOR_HOUSE_TYPE[houseType];
 };
 
 const fieldHouseTypeChangeHanler = (evt) => {
   const houseType = evt.target.value;
-  const minPrice = setMinPriceForHouseTypeValue(houseType);
+  const minPrice = setMinPriceByTypeOfHouse(houseType);
   const price = FIELD_PRICE.value;
 
   runCustomPriceValidation(price, minPrice);
@@ -124,7 +124,7 @@ const fieldHouseTypeChangeHanler = (evt) => {
 const fieldPriceChangeHangler = (evt) => {
   const price = evt.target.price;
   const houseType = FIELD_HOUSE_TYPE.value;
-  const minPrice = setMinPriceForHouseTypeValue(houseType);
+  const minPrice = setMinPriceByTypeOfHouse(houseType);
 
   runCustomPriceValidation(price, minPrice);
 };
