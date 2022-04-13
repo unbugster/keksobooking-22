@@ -18,3 +18,5 @@ rules:
       maxEOF: 0
       maxBOF: 0
 
+ globals:
+    console.log(): writable
