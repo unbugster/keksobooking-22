@@ -49,7 +49,6 @@ const getValuesGuestByRooms = (rooms) => {
 };
 
 const runCustomCapacityValidation = (value, validValues) => {
-
   if (!validValues.includes(value)) {
     FIELD_CAPACITY.setCustomValidity('Количество гостей не соответствует количеству комнат');
   } else {
@@ -131,7 +130,6 @@ const fieldPriceChangeHangler = (evt) => {
 };
 
 const runCustomPriceValidation = (verifiablePrice, minPriceLimit) => {
-
   if (FIELD_PRICE.validity.valueMissing) {
     FIELD_PRICE.setCustomValidity('Обязательное поле');
   } else if (verifiablePrice > MAX_PRICE_FOR_NIGHT) {
