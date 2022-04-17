@@ -49,7 +49,7 @@ const addPins = (items) => {
 
   items.map((item) => {
     const { location, popupContent } = item;
-    const { x: lat, y: lng } = location;
+    const { lat, lng } = location;
     const marker = L.marker(
       {
         lat,
