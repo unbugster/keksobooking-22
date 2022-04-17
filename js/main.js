@@ -1,4 +1,3 @@
-import { generateRandomAds } from './data.js';
 import { addFormListeners, toggleAdFormsActivation, setFormAddress } from './form.js';
 import { addPins, initMap, addMainPinMarker } from './map.js';
 import { generateAdElement } from './similar-ads.js';
