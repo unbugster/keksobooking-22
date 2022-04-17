@@ -1,3 +1,5 @@
+import { initDataErrorPopup, openDataErrorPopup } from './popup.js';
+
 const SERVER_GET_URL = 'https://22.javascript.pages.academy/keksobooking/data';
 
 const checkStatus = (response) => {
@@ -5,6 +7,8 @@ const checkStatus = (response) => {
     return response;
   }
 
+  initDataErrorPopup();
+  openDataErrorPopup();
   const { statusText, status } = response;
   throw new Error(`${status} — ${statusText}`);
 };

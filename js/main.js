@@ -3,8 +3,9 @@ import { addPins, initMap, addMainPinMarker } from './map.js';
 import { generateAdElement } from './similar-ads.js';
 import { getAdsData } from './data.js';
 
-const ads = getAdsData();
+initMap(toggleAdFormsActivation);
 
+const ads = getAdsData();
 ads.then((ads) => {
   const pinsData = ads.map((ad) => {
     return {
@@ -17,6 +18,5 @@ ads.then((ads) => {
   addPins(pinsData);
 });
 
-initMap(toggleAdFormsActivation);
 addFormListeners();
 addMainPinMarker(setFormAddress);
