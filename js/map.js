@@ -70,4 +70,4 @@ const addPins = (items) => {
   });
 };
 
-export { initMap, addPins, addMainPinMarker };
+export { initMap, addPins, addMainPinMarker, DEFAULT_LAT_LNG };

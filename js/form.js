@@ -1,4 +1,5 @@
 import { SERVER_POST_URL } from './data.js';
+import { DEFAULT_LAT_LNG } from './map.js';
 
 const FIELD_PRICE = document.querySelector('#price');
 const FIELD_TIME_OUT = document.querySelector('#timeout');
@@ -14,6 +15,7 @@ const MAP_FORM_FIELDSET = MAP_FILTER_FORM.querySelector('fieldset');
 const MAX_PRICE_FOR_NIGHT = 1000000;
 const ADDRESS = document.querySelector('#address');
 const TITLE_INPUT = document.querySelector('#title');
+const RESET_BUTTON = document.querySelector('.ad-form__reset');
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 
@@ -154,6 +156,8 @@ const addFormListeners = () => {
   FIELD_PRICE.addEventListener('input', fieldPriceChangeHangler);
   FIELD_HOUSE_TYPE.addEventListener('change', fieldHouseTypeChangeHanler);
   TITLE_INPUT.addEventListener('input', fieldTitleHandler);
+  AD_FORM.addEventListener('submit', adFormSubmitHandler);
+  RESET_BUTTON.addEventListener('click', adFormResetHandler);
 };
 
 const toggleAdMainFormActiveState = (on) => {
@@ -176,6 +180,15 @@ const toggleAdMapFormActiveState = (on) => {
     MAP_FORM_FIELDSET.setAttribute('disabled', true);
     MAP_FILTER_FORM_SELECTS.forEach((el) => el.setAttribute('disabled', true));
   }
+};
+
+const adFormSubmitHandler = ({ target }) => {
+  target.reset();
+  setFormAddress(DEFAULT_LAT_LNG);
+};
+
+const adFormResetHandler = () => {
+  setTimeout(() => setFormAddress(DEFAULT_LAT_LNG), 0);
 };
 
 const toggleAdFormsActivation = (on) => {
