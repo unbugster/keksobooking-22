@@ -1,3 +1,5 @@
+import { SERVER_POST_URL } from './data.js';
+
 const FIELD_PRICE = document.querySelector('#price');
 const FIELD_TIME_OUT = document.querySelector('#timeout');
 const FIELD_ROOMS_NUMBER = document.querySelector('#room_number');
@@ -181,4 +183,18 @@ const toggleAdFormsActivation = (on) => {
   toggleAdMapFormActiveState(on);
 };
 
-export { addFormListeners, toggleAdFormsActivation, setFormAddress };
+const setUserFormSubmit = () => {
+  AD_FORM.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const formData = new FormData(evt.target);
+    fetch(
+      SERVER_POST_URL,
+      {
+        method: 'POST',
+        body: formData,
+      },
+    );
+  });
+};
+
+export { addFormListeners, toggleAdFormsActivation, setFormAddress, setUserFormSubmit };

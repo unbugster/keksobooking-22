@@ -1,4 +1,4 @@
-import { addFormListeners, toggleAdFormsActivation, setFormAddress } from './form.js';
+import { addFormListeners, toggleAdFormsActivation, setFormAddress, setUserFormSubmit } from './form.js';
 import { addPins, initMap, addMainPinMarker } from './map.js';
 import { generateAdElement } from './similar-ads.js';
 import { getAdsData } from './data.js';
@@ -17,6 +17,6 @@ ads.then((ads) => {
 }).then((pinsData) => {
   addPins(pinsData);
 });
-
+setUserFormSubmit();
 addFormListeners();
 addMainPinMarker(setFormAddress);
