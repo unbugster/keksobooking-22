@@ -2,6 +2,7 @@ import { addFormListeners, toggleAdFormsActivation, setFormAddress, setUserFormS
 import { addPins, initMap, addMainPinMarker } from './map.js';
 import { generateAdElement } from './similar-ads.js';
 import { getAdsData } from './data.js';
+import { openSuccessPopup } from './popup.js';
 
 initMap(toggleAdFormsActivation);
 
@@ -17,6 +18,6 @@ ads.then((ads) => {
 }).then((pinsData) => {
   addPins(pinsData);
 });
-setUserFormSubmit();
+setUserFormSubmit(openSuccessPopup);
 addFormListeners();
 addMainPinMarker(setFormAddress);

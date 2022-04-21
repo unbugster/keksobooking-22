@@ -11,6 +11,7 @@ const onPopupsEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     closeDataErrorPopup();
+    closeSuccessPopup();
   }
 };
 
@@ -29,4 +30,23 @@ const initDataErrorPopup = () => {
   POPUP_DATA_ERROR_CLONE.addEventListener('click', closeDataErrorPopup);
 };
 
-export { initDataErrorPopup, openDataErrorPopup };
+const SUCCESS_TEMPLATE = document.querySelector('#success').content;
+const SUCCESS = SUCCESS_TEMPLATE.querySelector('.success');
+const SUCCESS_CLONE = SUCCESS.cloneNode(true);
+
+const openSuccessPopup = () => {
+  SUCCESS_CLONE.classList.remove('visually-hidden');
+};
+
+const closeSuccessPopup = () => {
+  SUCCESS_CLONE.classList.add('visually-hidden');
+};
+
+const initSuccessPopup = () => {
+  SUCCESS_CLONE.classList.add('visually-hidden');
+  MAIN_BLOCK.appendChild(SUCCESS_CLONE);
+  document.addEventListener('keydown', onPopupsEscKeydown);
+  document.addEventListener('click', closeSuccessPopup);
+};
+
+export { initDataErrorPopup, openDataErrorPopup, initSuccessPopup, openSuccessPopup };
