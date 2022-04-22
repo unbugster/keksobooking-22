@@ -16,10 +16,6 @@ const onPopupsEscKeydown = (evt) => {
   }
 };
 
-const openDataErrorPopup = () => {
-  POPUP_DATA_ERROR_CLONE.classList.remove('visually-hidden');
-};
-
 const closeDataErrorPopup = () => {
   POPUP_DATA_ERROR_CLONE.classList.add('visually-hidden');
   document.removeEventListener('keydown', onPopupsEscKeydown);
@@ -33,8 +29,9 @@ const initDataErrorPopup = () => {
   POPUP_DATA_ERROR_CLONE.addEventListener('click', closeDataErrorPopup);
 };
 
-const openSuccessPopup = () => {
-  SUCCESS_CLONE.classList.remove('visually-hidden');
+const openDataErrorPopup = () => {
+  initDataErrorPopup();
+  POPUP_DATA_ERROR_CLONE.classList.remove('visually-hidden');
 };
 
 const closeSuccessPopup = () => {
@@ -48,6 +45,11 @@ const initSuccessPopup = () => {
   MAIN_BLOCK.appendChild(SUCCESS_CLONE);
   document.addEventListener('keydown', onPopupsEscKeydown);
   SUCCESS_CLONE.addEventListener('click', closeSuccessPopup);
+};
+
+const openSuccessPopup = () => {
+  initSuccessPopup();
+  SUCCESS_CLONE.classList.remove('visually-hidden');
 };
 
 export { initDataErrorPopup, openDataErrorPopup, initSuccessPopup, openSuccessPopup };

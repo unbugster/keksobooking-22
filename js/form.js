@@ -1,6 +1,4 @@
-import { SERVER_POST_URL } from './data.js';
 import { DEFAULT_LAT_LNG } from './map.js';
-import { initSuccessPopup } from './popup.js';
 
 const FIELD_PRICE = document.querySelector('#price');
 const FIELD_TIME_OUT = document.querySelector('#timeout');
@@ -197,28 +195,4 @@ const toggleAdFormsActivation = (on) => {
   toggleAdMapFormActiveState(on);
 };
 
-const setUserFormSubmit = (onSuccess) => {
-  AD_FORM.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    const formData = new FormData(evt.target);
-    fetch(
-      SERVER_POST_URL,
-      {
-        method: 'POST',
-        body: formData,
-      },
-    ).then((response) => {
-      if (response.ok) {
-        initSuccessPopup();
-        onSuccess();
-      } else {
-        console.log('Не удалось отправить форму. Попробуйте ещё раз');// eslint-disable-line
-      }
-    })
-      .catch(() => {
-        console.log('Не удалось отправить форму. Попробуйте ещё раз');// eslint-disable-line
-      });
-  });
-};
-
-export { addFormListeners, toggleAdFormsActivation, setFormAddress, setUserFormSubmit };
+export { addFormListeners, toggleAdFormsActivation, setFormAddress, AD_FORM };
