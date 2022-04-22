@@ -27,7 +27,6 @@ const SELECTORS = {
   feature: '.popup__feature',
 };
 
-
 const pasteContent = (el, selector, content, isHtml) => {
   const element = el.querySelector(selector);
   if (!element) {

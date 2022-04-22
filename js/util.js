@@ -46,4 +46,8 @@ const addZeroBeforeNumber = (num) => {
   return ('0' + num).slice(-2);
 };
 
-export { getRandomArrayElement, getRandomInt, getRandomFloatBetween, getRandomList, addZeroBeforeNumber };
+const isEscEvent = (evt) => {
+  return evt.key === 'Escape' || evt.key === 'Esc';
+};
+
+export { getRandomArrayElement, getRandomInt, getRandomFloatBetween, getRandomList, addZeroBeforeNumber, isEscEvent };

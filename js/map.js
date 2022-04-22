@@ -16,23 +16,23 @@ const initMap = (adFormActivationToggle) => {
   ).addTo(MAP);
 };
 
-const addMainPinMarker = (onMainMarkerChange) => {
+const mainPinIcon = L.icon({
+  iconUrl: 'img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
 
-  const mainPinIcon = L.icon({
-    iconUrl: 'img/main-pin.svg',
-    iconSize: [52, 52],
-    iconAnchor: [26, 52],
-  });
+const mainPinMarker = L.marker(
+  DEFAULT_LAT_LNG,
+  {
+    draggable: true,
+    icon: mainPinIcon,
+  },
+);
+mainPinMarker.addTo(MAP);
 
-  const mainPinMarker = L.marker(
-    DEFAULT_LAT_LNG,
-    {
-      draggable: true,
-      icon: mainPinIcon,
-    },
-  );
+const getMainPinMarkerPosition = (onMainMarkerChange) => {
   onMainMarkerChange(DEFAULT_LAT_LNG);
-  mainPinMarker.addTo(MAP);
 
   mainPinMarker.on('moveend', (evt) => {
     const latLng = evt.target.getLatLng();
@@ -70,4 +70,4 @@ const addPins = (items) => {
   });
 };
 
-export { initMap, addPins, addMainPinMarker, DEFAULT_LAT_LNG };
+export { initMap, addPins, getMainPinMarkerPosition, DEFAULT_LAT_LNG };
