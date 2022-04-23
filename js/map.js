@@ -70,4 +70,18 @@ const addPins = (items) => {
   });
 };
 
-export { initMap, addPins, getMainPinMarkerPosition, DEFAULT_LAT_LNG };
+const renderPins = (data, content) => {
+  data.then((pins) => {
+    const pinsData = pins.map((pin) => {
+      return {
+        popupContent: content(pin),
+        location: pin.location,
+      };
+    });
+    return pinsData;
+  }).then((pinsData) => {
+    addPins(pinsData);
+  });
+};
+
+export { initMap, getMainPinMarkerPosition, DEFAULT_LAT_LNG, renderPins };

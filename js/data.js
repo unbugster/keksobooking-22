@@ -1,8 +1,7 @@
 import { initDataErrorPopup, openDataErrorPopup } from './popup.js';
-import { AD_FORM } from './form.js';
 
 const SERVER_GET_URL = 'https://22.javascript.pages.academy/keksobooking/data';
-const SERVER_POST_URL = 'https://22.javascript.pages.academy/keksobooking';
+const SERVER_POST_URL = 'https://22.javascript.pages.academy/keksobookinfg';
 
 const checkResponseStatus = (response) => {
   if (response.ok) {
@@ -19,27 +18,25 @@ const getAdsData = () => fetch(SERVER_GET_URL)
   .then(checkResponseStatus)
   .then((response) => response.json());
 
-const sendUserFormData = (onSuccess) => {
-  AD_FORM.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    const formData = new FormData(evt.target);
-    fetch(
-      SERVER_POST_URL,
-      {
-        method: 'POST',
-        body: formData,
-      },
-    ).then((response) => {
-      if (response.ok) {
-        onSuccess();
-      } else {
-        console.log('Не удалось отправить форму. Попробуйте ещё раз');// eslint-disable-line
-      }
-    })
-      .catch(() => {
-        console.log('Не удалось отправить форму. Попробуйте ещё раз');// eslint-disable-line
-      });
-  });
+const ads = getAdsData();
+
+const sendUserFormData = (onSuccess, onError, data) => {
+  fetch(
+    SERVER_POST_URL,
+    {
+      method: 'POST',
+      body: data,
+    },
+  ).then((response) => {
+    if (response.ok) {
+      onSuccess();
+    } else {
+      onError();
+    }
+  })
+    .catch(() => {
+      onError();
+    });
 };
 
-export { getAdsData, sendUserFormData };
+export { ads, sendUserFormData };

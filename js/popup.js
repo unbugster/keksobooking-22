@@ -29,9 +29,10 @@ const initDataErrorPopup = () => {
   POPUP_DATA_ERROR_CLONE.addEventListener('click', closeDataErrorPopup);
 };
 
-const openDataErrorPopup = () => {
+const openDataErrorPopup = (message) => {
   initDataErrorPopup();
   POPUP_DATA_ERROR_CLONE.classList.remove('visually-hidden');
+  POPUP_DATA_ERROR_CLONE.querySelector('.error__message').textContent = message;
 };
 
 const closeSuccessPopup = () => {
@@ -52,4 +53,9 @@ const openSuccessPopup = () => {
   SUCCESS_CLONE.classList.remove('visually-hidden');
 };
 
-export { initDataErrorPopup, openDataErrorPopup, initSuccessPopup, openSuccessPopup };
+const showAlert = (message) => {
+  initDataErrorPopup();
+  openDataErrorPopup(message);
+};
+
+export { initDataErrorPopup, openDataErrorPopup, initSuccessPopup, openSuccessPopup, showAlert };

@@ -1,4 +1,6 @@
 import { DEFAULT_LAT_LNG } from './map.js';
+import { sendUserFormData } from './data.js';
+import { showAlert } from './popup.js';
 
 const FIELD_PRICE = document.querySelector('#price');
 const FIELD_TIME_OUT = document.querySelector('#timeout');
@@ -196,3 +198,16 @@ const toggleAdFormsActivation = (on) => {
 };
 
 export { addFormListeners, toggleAdFormsActivation, setFormAddress, AD_FORM };
+
+const setUserFormSubmit = (onSuccess) => {
+  AD_FORM.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendUserFormData(
+      () => onSuccess(),
+      () => showAlert('Не удалось отправить форму. Попробуйте ещё раз'),
+      new FormData(evt.target),
+    );
+  });
+};
+
+export { setUserFormSubmit };
