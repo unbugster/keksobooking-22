@@ -1,5 +1,3 @@
-import { initDataErrorPopup, openDataErrorPopup, openSuccessPopup } from './popup.js';
-
 const SERVER_GET_URL = 'https://22.javascript.pages.academy/keksobooking/data';
 const SERVER_POST_URL = 'https://22.javascript.pages.academy/keksobooking';
 
@@ -7,9 +5,6 @@ const checkResponseStatus = (response) => {
   if (response.ok) {
     return response;
   }
-
-  initDataErrorPopup();
-  openDataErrorPopup();
   const { statusText, status } = response;
   throw new Error(`ERROR: ${status} — ${statusText}`);
 };
@@ -17,8 +12,6 @@ const checkResponseStatus = (response) => {
 const getAdsData = () => fetch(SERVER_GET_URL)
   .then(checkResponseStatus)
   .then((response) => response.json());
-
-const ads = getAdsData();
 
 const sendUserFormData = (onSuccess, onError, data) => {
   fetch(
@@ -30,7 +23,6 @@ const sendUserFormData = (onSuccess, onError, data) => {
   ).then((response) => {
     if (response.ok) {
       onSuccess();
-      openSuccessPopup();
     } else {
       onError();
     }
@@ -40,4 +32,4 @@ const sendUserFormData = (onSuccess, onError, data) => {
     });
 };
 
-export { ads, sendUserFormData };
+export { getAdsData, sendUserFormData };

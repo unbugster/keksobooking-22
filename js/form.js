@@ -1,6 +1,5 @@
 import { DEFAULT_LAT_LNG, defaultMarkerPosition } from './map.js';
 import { sendUserFormData } from './data.js';
-import { showAlert } from './popup.js';
 
 const FIELD_PRICE = document.querySelector('#price');
 const FIELD_TIME_OUT = document.querySelector('#timeout');
@@ -182,8 +181,8 @@ const toggleAdMapFormActiveState = (on) => {
   }
 };
 
-const resetForm = ({ target }) => {
-  target.reset();
+const resetAdForm = () => {
+  AD_FORM.reset();
   defaultMarkerPosition();
   setFormAddress(DEFAULT_LAT_LNG);
 };
@@ -198,18 +197,18 @@ const toggleAdFormsActivation = (on) => {
   toggleAdMapFormActiveState(on);
 };
 
-const setUserFormSubmit = (onSuccess) => {
+const setUserFormSubmit = (onSuccess, onError) => {
   AD_FORM.addEventListener('submit', (evt) => {
     evt.preventDefault();
     sendUserFormData(
       () => {
         onSuccess();
-        resetForm(evt);
+        resetAdForm();
       },
-      () => showAlert('Не удалось отправить форму. Попробуйте ещё раз'),
+      () => onError('Не удалось отправить форму. Попробуйте ещё раз'),
       new FormData(evt.target),
     );
   });
 };
 
-export { addFormListeners, toggleAdFormsActivation, setFormAddress, AD_FORM, setUserFormSubmit };
+export { addFormListeners, toggleAdFormsActivation, setFormAddress, setUserFormSubmit };

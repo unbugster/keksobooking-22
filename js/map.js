@@ -74,18 +74,14 @@ const addPins = (items) => {
   });
 };
 
-const renderPins = (data, content) => {
-  data.then((pins) => {
-    const pinsData = pins.map((pin) => {
-      return {
-        popupContent: content(pin),
-        location: pin.location,
-      };
-    });
-    return pinsData;
-  }).then((pinsData) => {
-    addPins(pinsData);
+const renderPins = (pinsData, content) => {
+  const data = pinsData.map((pin) => {
+    return {
+      popupContent: content(pin),
+      location: pin.location,
+    };
   });
+  addPins(data);
 };
 
 export { initMap, getMainPinMarkerPosition, DEFAULT_LAT_LNG, renderPins, defaultMarkerPosition };
