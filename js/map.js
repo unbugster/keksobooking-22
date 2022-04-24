@@ -31,6 +31,10 @@ const mainPinMarker = L.marker(
 );
 mainPinMarker.addTo(MAP);
 
+const defaultMarkerPosition = () => {
+  mainPinMarker.setLatLng(DEFAULT_LAT_LNG);
+};
+
 const getMainPinMarkerPosition = (onMainMarkerChange) => {
   onMainMarkerChange(DEFAULT_LAT_LNG);
 
@@ -84,4 +88,4 @@ const renderPins = (data, content) => {
   });
 };
 
-export { initMap, getMainPinMarkerPosition, DEFAULT_LAT_LNG, renderPins };
+export { initMap, getMainPinMarkerPosition, DEFAULT_LAT_LNG, renderPins, defaultMarkerPosition };

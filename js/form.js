@@ -1,4 +1,4 @@
-import { DEFAULT_LAT_LNG } from './map.js';
+import { DEFAULT_LAT_LNG, defaultMarkerPosition } from './map.js';
 import { sendUserFormData } from './data.js';
 import { showAlert } from './popup.js';
 
@@ -157,7 +157,6 @@ const addFormListeners = () => {
   FIELD_PRICE.addEventListener('input', fieldPriceChangeHangler);
   FIELD_HOUSE_TYPE.addEventListener('change', fieldHouseTypeChangeHanler);
   TITLE_INPUT.addEventListener('input', fieldTitleHandler);
-  AD_FORM.addEventListener('submit', adFormSubmitHandler);
   RESET_BUTTON.addEventListener('click', adFormResetHandler);
 };
 
@@ -183,13 +182,15 @@ const toggleAdMapFormActiveState = (on) => {
   }
 };
 
-const adFormSubmitHandler = ({ target }) => {
+const resetForm = ({ target }) => {
   target.reset();
+  defaultMarkerPosition();
   setFormAddress(DEFAULT_LAT_LNG);
 };
 
 const adFormResetHandler = () => {
   setTimeout(() => setFormAddress(DEFAULT_LAT_LNG), 0);
+  defaultMarkerPosition();
 };
 
 const toggleAdFormsActivation = (on) => {
@@ -197,17 +198,18 @@ const toggleAdFormsActivation = (on) => {
   toggleAdMapFormActiveState(on);
 };
 
-export { addFormListeners, toggleAdFormsActivation, setFormAddress, AD_FORM };
-
 const setUserFormSubmit = (onSuccess) => {
   AD_FORM.addEventListener('submit', (evt) => {
     evt.preventDefault();
     sendUserFormData(
-      () => onSuccess(),
+      () => {
+        onSuccess();
+        resetForm(evt);
+      },
       () => showAlert('Не удалось отправить форму. Попробуйте ещё раз'),
       new FormData(evt.target),
     );
   });
 };
 
-export { setUserFormSubmit };
+export { addFormListeners, toggleAdFormsActivation, setFormAddress, AD_FORM, setUserFormSubmit };
