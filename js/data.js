@@ -9,27 +9,16 @@ const checkResponseStatus = (response) => {
   throw new Error(`ERROR: ${status} — ${statusText}`);
 };
 
-const getAdsData = () => fetch(SERVER_GET_URL)
-  .then(checkResponseStatus)
-  .then((response) => response.json());
+const getAdsData = () =>
+  fetch(SERVER_GET_URL)
+    .then(checkResponseStatus)
+    .then((response) => response.json());
 
-const sendUserFormData = (onSuccess, onError, data) => {
-  fetch(
-    SERVER_POST_URL,
+const sendUserFormData = (data) =>
+  fetch(SERVER_POST_URL,
     {
       method: 'POST',
       body: data,
-    },
-  ).then((response) => {
-    if (response.ok) {
-      onSuccess();
-    } else {
-      onError();
-    }
-  })
-    .catch(() => {
-      onError();
     });
-};
 
 export { getAdsData, sendUserFormData };

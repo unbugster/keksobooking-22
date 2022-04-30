@@ -200,14 +200,12 @@ const toggleAdFormsActivation = (on) => {
 const setUserFormSubmit = (onSuccess, onError) => {
   AD_FORM.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    sendUserFormData(
-      () => {
+    sendUserFormData(new FormData(evt.target))
+      .then(() => {
         onSuccess();
         resetAdForm();
-      },
-      () => onError('Не удалось отправить форму. Попробуйте ещё раз'),
-      new FormData(evt.target),
-    );
+      })
+      .catch(() => onError('Не удалось отправить форму. Попробуйте еще раз'));
   });
 };
 
