@@ -19,6 +19,6 @@ const sendUserFormData = (data) =>
     {
       method: 'POST',
       body: data,
-    });
+    }).then(checkResponseStatus);
 
 export { getAdsData, sendUserFormData };

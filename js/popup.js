@@ -8,54 +8,46 @@ const SUCCESS_TEMPLATE = document.querySelector('#success').content;
 const SUCCESS = SUCCESS_TEMPLATE.querySelector('.success');
 const SUCCESS_CLONE = SUCCESS.cloneNode(true);
 
-const onPopupsEscKeydown = (evt) => {
+MAIN_BLOCK.appendChild(SUCCESS_CLONE);
+MAIN_BLOCK.appendChild(POPUP_DATA_ERROR_CLONE);
+
+const createPopupEscKeydownHandler = (cb) => (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
-    closeDataErrorPopup();
-    closeSuccessPopup();
+    cb();
   }
 };
 
+const onSuccessPopupEscKeyDown = () => createPopupEscKeydownHandler(closeSuccessPopup);
+const onDataErrorPopupEscKeyDown = () => createPopupEscKeydownHandler(closeDataErrorPopup);
+
 const closeDataErrorPopup = () => {
   POPUP_DATA_ERROR_CLONE.classList.add('visually-hidden');
-  document.removeEventListener('keydown', onPopupsEscKeydown);
+  document.removeEventListener('keydown', onDataErrorPopupEscKeyDown);
   POPUP_DATA_ERROR_CLONE.removeEventListener('click', closeDataErrorPopup);
 };
 
-const initDataErrorPopup = () => {
-  POPUP_DATA_ERROR_CLONE.classList.add('visually-hidden');
-  MAIN_BLOCK.appendChild(POPUP_DATA_ERROR_CLONE);
-  document.addEventListener('keydown', onPopupsEscKeydown);
-  POPUP_DATA_ERROR_CLONE.addEventListener('click', closeDataErrorPopup);
-};
-
 const openDataErrorPopup = (message) => {
-  initDataErrorPopup();
+  document.addEventListener('keydown', onDataErrorPopupEscKeyDown);
+  POPUP_DATA_ERROR_CLONE.addEventListener('click', closeDataErrorPopup);
   POPUP_DATA_ERROR_CLONE.classList.remove('visually-hidden');
   POPUP_DATA_ERROR_CLONE.querySelector('.error__message').textContent = message;
 };
 
 const closeSuccessPopup = () => {
   SUCCESS_CLONE.classList.add('visually-hidden');
-  document.removeEventListener('keydown', onPopupsEscKeydown);
+  document.removeEventListener('keydown', onSuccessPopupEscKeyDown);
   SUCCESS_CLONE.removeEventListener('click', closeSuccessPopup);
 };
 
-const initSuccessPopup = () => {
-  SUCCESS_CLONE.classList.add('visually-hidden');
-  MAIN_BLOCK.appendChild(SUCCESS_CLONE);
-  document.addEventListener('keydown', onPopupsEscKeydown);
-  SUCCESS_CLONE.addEventListener('click', closeSuccessPopup);
-};
-
 const openSuccessPopup = () => {
-  initSuccessPopup();
+  document.addEventListener('keydown', onSuccessPopupEscKeyDown);
+  SUCCESS_CLONE.addEventListener('click', closeSuccessPopup);
   SUCCESS_CLONE.classList.remove('visually-hidden');
 };
 
 const showAlert = (message) => {
-  initDataErrorPopup();
   openDataErrorPopup(message);
 };
 
-export { initDataErrorPopup, openDataErrorPopup, initSuccessPopup, openSuccessPopup, showAlert };
+export { openDataErrorPopup, openSuccessPopup, showAlert };
