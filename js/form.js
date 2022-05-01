@@ -1,3 +1,6 @@
+import { DEFAULT_LAT_LNG, defaultMarkerPosition } from './map.js';
+import { sendUserFormData } from './data.js';
+
 const FIELD_PRICE = document.querySelector('#price');
 const FIELD_TIME_OUT = document.querySelector('#timeout');
 const FIELD_ROOMS_NUMBER = document.querySelector('#room_number');
@@ -12,6 +15,7 @@ const MAP_FORM_FIELDSET = MAP_FILTER_FORM.querySelector('fieldset');
 const MAX_PRICE_FOR_NIGHT = 1000000;
 const ADDRESS = document.querySelector('#address');
 const TITLE_INPUT = document.querySelector('#title');
+const RESET_BUTTON = document.querySelector('.ad-form__reset');
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 
@@ -152,6 +156,7 @@ const addFormListeners = () => {
   FIELD_PRICE.addEventListener('input', fieldPriceChangeHangler);
   FIELD_HOUSE_TYPE.addEventListener('change', fieldHouseTypeChangeHanler);
   TITLE_INPUT.addEventListener('input', fieldTitleHandler);
+  RESET_BUTTON.addEventListener('click', adFormResetHandler);
 };
 
 const toggleAdMainFormActiveState = (on) => {
@@ -176,9 +181,32 @@ const toggleAdMapFormActiveState = (on) => {
   }
 };
 
+const resetAdForm = () => {
+  AD_FORM.reset();
+  defaultMarkerPosition();
+  setFormAddress(DEFAULT_LAT_LNG);
+};
+
+const adFormResetHandler = () => {
+  setTimeout(() => setFormAddress(DEFAULT_LAT_LNG), 0);
+  defaultMarkerPosition();
+};
+
 const toggleAdFormsActivation = (on) => {
   toggleAdMainFormActiveState(on);
   toggleAdMapFormActiveState(on);
 };
 
-export { addFormListeners, toggleAdFormsActivation, setFormAddress };
+const setUserFormSubmit = (onSuccess, onError) => {
+  AD_FORM.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendUserFormData(new FormData(evt.target))
+      .then(() => {
+        onSuccess();
+        resetAdForm();
+      })
+      .catch(() => onError('Не удалось отправить форму. Попробуйте еще раз'));
+  });
+};
+
+export { addFormListeners, toggleAdFormsActivation, setFormAddress, setUserFormSubmit };

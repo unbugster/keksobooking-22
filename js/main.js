@@ -1,17 +1,17 @@
-import { generateRandomAds } from './data.js';
-import { addFormListeners, toggleAdFormsActivation, setFormAddress } from './form.js';
-import { addPins, initMap, addMainPinMarker } from './map.js';
+import { addFormListeners, toggleAdFormsActivation, setFormAddress, setUserFormSubmit } from './form.js';
+import { initMap, getMainPinMarkerPosition, renderPins } from './map.js';
 import { generateAdElement } from './similar-ads.js';
-
-const ads = generateRandomAds();
-const pinsData = ads.map((ad) => {
-  return {
-    popupContent: generateAdElement(ad),
-    location: ad.location,
-  };
-});
+import { getAdsData } from './data.js';
+import { openSuccessPopup, openDataErrorPopup, showAlert } from './popup.js';
 
 initMap(toggleAdFormsActivation);
+
+getAdsData().then((pinsData) => {
+  renderPins(pinsData, generateAdElement);
+}).catch(() => {
+  openDataErrorPopup();
+});
+
+setUserFormSubmit(openSuccessPopup, showAlert);
 addFormListeners();
-addPins(pinsData);
-addMainPinMarker(setFormAddress);
+getMainPinMarkerPosition(setFormAddress);
