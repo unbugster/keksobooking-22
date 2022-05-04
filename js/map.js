@@ -44,6 +44,8 @@ const getMainPinMarkerPosition = (onMainMarkerChange) => {
   });
 };
 
+const pins = [];
+
 const addPins = (items) => {
   const pinIcon = L.icon({
     iconUrl: 'img/pin.svg',
@@ -63,6 +65,7 @@ const addPins = (items) => {
         icon: pinIcon,
       },
     );
+    pins.push(marker);
     marker
       .addTo(MAP)
       .bindPopup(
@@ -72,6 +75,11 @@ const addPins = (items) => {
         },
       );
   });
+};
+
+const removePins = () => {
+  pins.forEach((pin) => MAP.removeLayer(pin));
+  pins.length = 0;
 };
 
 const renderPins = (pinsData, content) => {
