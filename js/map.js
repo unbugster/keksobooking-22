@@ -1,3 +1,5 @@
+import { generateAdElement } from './similar-ads.js';
+
 const MAP = L.map('map-canvas');
 const DEFAULT_LAT_LNG = { lat: 35.6895, lng: 139.69171 };
 
@@ -82,14 +84,15 @@ const removePins = () => {
   pins.length = 0;
 };
 
-const renderPins = (pinsData, content) => {
+const renderPins = (pinsData) => {
+  removePins();
   const data = pinsData.map((pin) => {
     return {
-      popupContent: content(pin),
+      popupContent: generateAdElement(pin),
       location: pin.location,
     };
   });
   addPins(data);
 };
 
-export { initMap, getMainPinMarkerPosition, DEFAULT_LAT_LNG, renderPins, defaultMarkerPosition };
+export { initMap, getMainPinMarkerPosition, DEFAULT_LAT_LNG, renderPins, defaultMarkerPosition, removePins };
