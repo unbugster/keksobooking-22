@@ -6,15 +6,20 @@ const HOUSING_FEATURES = document.querySelector('#housing-features');
 
 const SIMILAR_ADS = 10;
 
+let filters = {
+  'housing-type': 'any',
+  'housing-price': 'any',
+  'housing-rooms': 'any',
+  'housing-guests': 'any',
+  'housing-features': new Set(),
+};
+
 const setHousingFeaturesChange = (cb) => {
   HOUSING_FEATURES.addEventListener('change', (evt) => {
     const feature = evt.target.value;
+    let featureList = filters['housing-features'];
+    featureList.has(feature) ? featureList.delete(feature) : featureList.add(feature);
 
-    if (filters['housing-features'].includes(feature)) {
-      filters['housing-features'] = filters['housing-features'].filter((el) => el !== feature);
-    } else {
-      filters['housing-features'] = [...filters['housing-features'], feature];
-    }
     cb();
   });
 };
@@ -45,14 +50,6 @@ const setHousingGuestsChange = (cb) => {
     filters['housing-guests'] = evt.target.value;
     cb();
   });
-};
-
-let filters = {
-  'housing-type': 'any',
-  'housing-price': 'any',
-  'housing-rooms': 'any',
-  'housing-guests': 'any',
-  'housing-features': [],
 };
 
 const doFilter = (pinsData) => {
@@ -102,7 +99,7 @@ const doFilter = (pinsData) => {
     })
     .filter((pin) => {
       //filters features
-      const filterValue = filters['housing-features'];
+      const filterValue = [...filters['housing-features']];
       const features = pin.offer.features;
 
       return (
