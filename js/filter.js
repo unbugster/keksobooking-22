@@ -4,7 +4,7 @@ const HOUSING_ROOMS = document.querySelector('#housing-rooms');
 const HOUSING_GUESTS = document.querySelector('#housing-guests');
 const HOUSING_FEATURES = document.querySelector('#housing-features');
 
-const SIMILAR_ADS = 10;
+const MAX_SIMILAR_ADS = 10;
 
 let filters = {
   'housing-type': 'any',
@@ -52,8 +52,8 @@ const setHousingGuestsChange = (cb) => {
   });
 };
 
-const doFilter = (pinsData) => {
-  let filteredData = pinsData
+const filterPins = (pinsData) => {
+  const filteredData = pinsData
     .filter((pin) => {
       //filters type
       const filterValue = filters['housing-type'];
@@ -106,18 +106,12 @@ const doFilter = (pinsData) => {
         (!filterValue.length) ||
         (filterValue.every(item => features.includes(item)))
       );
-    });
+    }).slice(0, MAX_SIMILAR_ADS);
 
-  filteredData = filteredData.slice(0, SIMILAR_ADS);
   return filteredData;
 };
 
-const renderFilteredPins = (pinsData, cb) => {
-  const filteredData = doFilter(pinsData);
-  cb(filteredData);
-};
-
 export {
-  renderFilteredPins, setHousingTypeChange, setHousingPriceChange,
+  filterPins, setHousingTypeChange, setHousingPriceChange,
   setHousingRoomsChange, setHousingGuestsChange, setHousingFeaturesChange
 };
