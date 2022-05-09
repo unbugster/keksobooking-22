@@ -89,6 +89,7 @@ const renderPins = (pinsData) => {
   const data = pinsData.map((pin) => {
     return {
       popupContent: generateAdElement(pin),
+
       location: pin.location,
     };
   });
@@ -96,3 +97,4 @@ const renderPins = (pinsData) => {
 };
 
 export { initMap, getMainPinMarkerPosition, DEFAULT_LAT_LNG, renderPins, defaultMarkerPosition, removePins };
+
