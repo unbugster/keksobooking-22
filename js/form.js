@@ -1,5 +1,6 @@
 import { DEFAULT_LAT_LNG, defaultMarkerPosition } from './map.js';
 import { sendUserFormData } from './data.js';
+import { removeImages } from './image-loading.js';
 
 const FIELD_PRICE = document.querySelector('#price');
 const FIELD_TIME_OUT = document.querySelector('#timeout');
@@ -183,11 +184,13 @@ const toggleAdMapFormActiveState = (on) => {
 
 const resetAdForm = () => {
   AD_FORM.reset();
+  removeImages();
   defaultMarkerPosition();
   setFormAddress(DEFAULT_LAT_LNG);
 };
 
 const adFormResetHandler = () => {
+  removeImages();
   setTimeout(() => setFormAddress(DEFAULT_LAT_LNG), 0);
   defaultMarkerPosition();
 };

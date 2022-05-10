@@ -6,8 +6,8 @@ const fileHousePhotoChooser = document.querySelector('.ad-form__upload input[typ
 const housePhotoPreview = document.querySelector('.ad-form__photo');
 
 const AvatarSize = {
-  WIDTH: 70,
-  HEIGHT: 70,
+  WIDTH: 40,
+  HEIGHT: 44,
 };
 
 const HousePhotoSize = {
@@ -31,20 +31,29 @@ fileAvatarChooser.addEventListener('change', (evt) => {
   }
 });
 
+const img = document.createElement('img');
+
 fileHousePhotoChooser.addEventListener('change', (evt) => {
-  const files = evt.target.files;
+  housePhotoPreview.append(img);
+  const file = evt.target.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((imageType) => fileName.endsWith(imageType));
 
-  const filesArr = Array.from(files);
-  filesArr.forEach((file) => {
-    const fileName = file.name.toLowerCase();
-    const matches = FILE_TYPES.some((imageType) => fileName.endsWith(imageType));
+  if (matches) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      img.src = reader.result;
+      img.width = HousePhotoSize.WIDTH;
+      img.height = HousePhotoSize.HEIGHT;
+    });
+    reader.readAsDataURL(file);
+  }
 
-    if (matches) {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => {
-        housePhotoPreview.insertAdjacentHTML('beforeend', `<img src="${reader.result}" width="${HousePhotoSize.WIDTH}px" height="${HousePhotoSize.HEIGHT}px">`);
-      });
-      reader.readAsDataURL(file);
-    }
-  });
 });
+
+const removeImages = () => {
+  avatarPreview.src = 'img/muffin-grey.svg';
+  img.remove();
+};
+
+export { removeImages };
