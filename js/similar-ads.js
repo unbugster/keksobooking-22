@@ -1,6 +1,6 @@
 const TEMPLATE_FRAGMENT_CARD = document.querySelector('#card').content;
 const TEMPLATE_AD = TEMPLATE_FRAGMENT_CARD.querySelector('article');
-const FRAGMENT_ADS = document.createDocumentFragment();
+// const FRAGMENT_ADS = document.createDocumentFragment();
 
 const TEMPLATE_PHOTO = document.querySelector('#popup__img-photo');
 const TEMPLATE_CONTENT = TEMPLATE_PHOTO.content;
@@ -102,13 +102,13 @@ const generateAdElement = (ad) => {
   return adElement;
 };
 
-const generateAds = (randomAds) => {
-  randomAds.forEach((ad) => {
-    const adElement = generateAdElement(ad);
-    FRAGMENT_ADS.appendChild(adElement);
-  });
+// const generateAds = (randomAds) => {
+//   randomAds.forEach((ad) => {
+//     const adElement = generateAdElement(ad);
+//     FRAGMENT_ADS.appendChild(adElement);
+//   });
 
-  return FRAGMENT_ADS;
-};
+//   return FRAGMENT_ADS;
+// };
 
-export { generateAds, generateAdElement };
+export { generateAdElement };

@@ -1,3 +1,5 @@
+import { generateAdElement } from './similar-ads.js';
+
 const MAP = L.map('map-canvas');
 const DEFAULT_LAT_LNG = { lat: 35.6895, lng: 139.69171 };
 
@@ -44,6 +46,8 @@ const getMainPinMarkerPosition = (onMainMarkerChange) => {
   });
 };
 
+const pins = [];
+
 const addPins = (items) => {
   const pinIcon = L.icon({
     iconUrl: 'img/pin.svg',
@@ -63,6 +67,7 @@ const addPins = (items) => {
         icon: pinIcon,
       },
     );
+    pins.push(marker);
     marker
       .addTo(MAP)
       .bindPopup(
@@ -74,14 +79,22 @@ const addPins = (items) => {
   });
 };
 
-const renderPins = (pinsData, content) => {
+const removePins = () => {
+  pins.forEach((pin) => MAP.removeLayer(pin));
+  pins.length = 0;
+};
+
+const renderPins = (pinsData) => {
+  removePins();
   const data = pinsData.map((pin) => {
     return {
-      popupContent: content(pin),
+      popupContent: generateAdElement(pin),
+
       location: pin.location,
     };
   });
   addPins(data);
 };
 
-export { initMap, getMainPinMarkerPosition, DEFAULT_LAT_LNG, renderPins, defaultMarkerPosition };
+export { initMap, getMainPinMarkerPosition, DEFAULT_LAT_LNG, renderPins, defaultMarkerPosition, removePins };
+
