@@ -1,4 +1,5 @@
 /* global _:readonly */
+import '../../build/leaflet/leaflet.js';
 import { addFormListeners, toggleAdFormsActivation, setFormAddress, setUserFormSubmit } from './form.js';
 import { initMap, getMainPinMarkerPosition, renderPins } from './map.js';
 import { getAdsData } from './data.js';
