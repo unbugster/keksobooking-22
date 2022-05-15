@@ -1,9 +1,9 @@
 /* global _:readonly */
+import '../../build/leaflet/leaflet.js';
 import { addFormListeners, toggleAdFormsActivation, setFormAddress, setUserFormSubmit } from './form.js';
 import { initMap, getMainPinMarkerPosition, renderPins } from './map.js';
 import { getAdsData } from './data.js';
 import { openSuccessPopup, openDataErrorPopup, showAlert } from './popup.js';
-import './image-loading.js';
 import {
   filterPins, setHousingTypeChange, setHousingPriceChange,
   setHousingRoomsChange, setHousingGuestsChange, setHousingFeaturesChange
